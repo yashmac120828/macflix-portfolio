@@ -8,11 +8,11 @@ export default function Hero() {
   const y2 = useTransform(scrollY, [0, 300], [0, -100])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-macflix-gradient" id="home">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-macflix-gradient py-16 sm:py-20" id="home">
+      {/* Animated Background Elements - Hidden on mobile for better performance */}
+      <div className="absolute inset-0 hidden sm:block">
         <motion.div 
-          className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"
+          className="absolute top-20 left-10 w-48 md:w-72 h-48 md:h-72 bg-white/10 rounded-full blur-3xl"
           style={{ y: y1 }}
           animate={{ 
             scale: [1, 1.2, 1],
@@ -69,14 +69,13 @@ export default function Hero() {
           transition={{ duration: 1, type: "spring", bounce: 0.5 }}
           className="mb-8"
         >
-          {/* Fixed Logo Container - Much smaller and simpler */}
-          <div className="w-24 h-24 mx-auto">
+          {/* Fixed Logo Container - Responsive sizes */}
+          <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto">
             <Logo variant="hero" className="scale-100" />
-            
           </div>
         </motion.div>
         <motion.h1
-          className="text-6xl md:text-8xl font-bold mb-6 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 leading-tight"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -85,7 +84,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p
-          className="text-2xl md:text-3xl font-light mb-8 text-white/90"
+          className="text-xl sm:text-2xl md:text-3xl font-light mb-4 sm:mb-8 text-white/90"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -94,7 +93,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.p
-          className="text-lg md:text-xl mb-12 text-white/80 max-w-3xl mx-auto"
+          className="text-base sm:text-lg md:text-xl mb-8 sm:mb-12 text-white/80 max-w-3xl mx-auto px-4 sm:px-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
@@ -104,25 +103,25 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-          className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full sm:w-auto px-4 sm:px-0"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
         >
           <motion.a
             href="https://wa.me/918780364562"
-            className="group px-8 py-4 bg-white text-macflix-primary font-bold rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 flex items-center space-x-3"
+            className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-macflix-primary font-bold rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3 text-sm sm:text-base"
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.95 }}
           >
-            <MessageCircle size={24} />
+            <MessageCircle size={20} className="sm:w-6 sm:h-6" />
             <span>Let's Work Together</span>
-            <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+            <ArrowRight className="group-hover:translate-x-1 transition-transform w-4 h-4 sm:w-5 sm:h-5" />
           </motion.a>
 
           <motion.a
             href="#portfolio"
-            className="group px-8 py-4 border-2 border-white text-white font-bold rounded-2xl hover:bg-white hover:text-macflix-primary transition-all duration-300 flex items-center space-x-3"
+            className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-bold rounded-xl sm:rounded-2xl hover:bg-white hover:text-macflix-primary transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3 text-sm sm:text-base"
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -133,35 +132,35 @@ export default function Hero() {
 
         {/* Stats */}
         <motion.div
-          className="grid grid-cols-3 gap-8 mt-16 pt-16 border-t border-white/20"
+          className="grid grid-cols-3 gap-3 sm:gap-8 mt-12 sm:mt-16 pt-12 sm:pt-16 border-t border-white/20"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
         >
           {[
-            { icon: <Users size={32} />, number: "50+", label: "Happy Clients" },
-            { icon: <Award size={32} />, number: "10+", label: "Projects Done" },
-            { icon: <Clock size={32} />, number: "24/7", label: "Support" },
+            { icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />, number: "50+", label: "Happy Clients" },
+            { icon: <Award className="w-6 h-6 sm:w-8 sm:h-8" />, number: "10+", label: "Projects Done" },
+            { icon: <Clock className="w-6 h-6 sm:w-8 sm:h-8" />, number: "24/7", label: "Support" },
           ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="flex justify-center mb-4 text-yellow-300">
+            <div key={index} className="text-center px-2 sm:px-4">
+              <div className="flex justify-center mb-2 sm:mb-4 text-yellow-300">
                 {stat.icon}
               </div>
-              <div className="text-3xl font-bold mb-2">{stat.number}</div>
-              <div className="text-white/80">{stat.label}</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">{stat.number}</div>
+              <div className="text-white/80 text-sm sm:text-base">{stat.label}</div>
             </div>
           ))}
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Hidden on mobile */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/70 rounded-full mt-2"></div>
+        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
+          <div className="w-1 h-2 sm:h-3 bg-white/70 rounded-full mt-2"></div>
         </div>
       </motion.div>
     </section>

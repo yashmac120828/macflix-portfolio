@@ -1,7 +1,7 @@
 import logo from "../assets/logo.png"
 
 export default function Logo({ className, variant = "default" }) {
-  if (variant === "hero") {
+  if (variant === "hero" || variant==="footer") {
     return (
       <div className={`flex items-center justify-center ${className}`}>
         <img src={logo} alt="MacFlix Logo" className="w-25 h-25 drop-shadow-lg" />

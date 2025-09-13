@@ -92,55 +92,55 @@ export default function Contact() {
   }
 
   return (
-    <section className="py-24 bg-gradient-to-br from-purple-600 to-pink-600 text-white relative" id="contact">
-      <div className="container mx-auto px-6">
+    <section className="py-12 sm:py-24 bg-gradient-to-br from-purple-600 to-pink-600 text-white relative" id="contact">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-20"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="flex justify-center mb-6">
-            <div className="p-4 bg-white/20 backdrop-blur-md rounded-2xl">
-              <Zap size={32} className="text-white" />
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <div className="p-3 sm:p-4 bg-white/20 backdrop-blur-md rounded-xl sm:rounded-2xl">
+              <Zap size={28} className="text-white sm:w-8 sm:h-8" />
             </div>
           </div>
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6">
             Let's <span className="text-yellow-300">Connect</span>
           </h2>
-          <p className="text-2xl text-white/90 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-2xl text-white/90 max-w-3xl mx-auto px-4">
             Ready to transform your ideas into stunning visuals? Reach out and let's create something amazing together!
           </p>
         </motion.div>
 
         {/* MacFlix Business Card */}
         <motion.div
-          className="mb-16 max-w-2xl mx-auto"
+          className="mb-8 sm:mb-16 max-w-2xl mx-auto px-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="bg-black rounded-3xl p-8 relative overflow-hidden">
+          <div className="bg-black rounded-2xl sm:rounded-3xl p-4 sm:p-8 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-pink-900/20"></div>
             <div className="relative z-10">
-              <div className="flex justify-between items-start mb-6">
-                <div className="flex items-center space-x-4">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 sm:gap-0 mb-6">
+                <div className="flex items-center space-x-3 sm:space-x-4">
                   {/* Logo image */}
-                  <img src={logo} alt="MacFlix Logo" className="w-16 h-16 rounded-2xl" />
+                  <img src={logo} alt="MacFlix Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl" />
                   <div>
-                    <h3 className="text-4xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">MacFlix</h3>
-                    <p className="text-gray-300 text-lg">Where Creativity Meets Precision</p>
+                    <h3 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">MacFlix</h3>
+                    <p className="text-gray-300 text-base sm:text-lg">Where Creativity Meets Precision</p>
                   </div>
                 </div>
                 <motion.button
                   onClick={downloadBusinessCard}
-                  className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl hover:from-purple-700 hover:to-pink-700 transition-colors duration-300"
+                  className="flex items-center justify-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl sm:rounded-2xl hover:from-purple-700 hover:to-pink-700 transition-colors duration-300 w-full sm:w-auto"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Download size={20} />
+                  <Download size={18} className="sm:w-5 sm:h-5" />
                   <span>Download Card</span>
                 </motion.button>
               </div>
@@ -215,68 +215,68 @@ export default function Contact() {
 
         {/* QR Codes Section */}
         <motion.div
-          className="mb-16 max-w-md mx-auto"
+          className="mb-8 sm:mb-16 max-w-md mx-auto px-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-3xl font-bold text-center mb-8 text-white">Quick Connect</h3>
-          <div className="flex justify-center space-x-8">
+          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-white">Quick Connect</h3>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8">
             <motion.div
-              className="text-center"
+              className="text-center w-full sm:w-auto"
               whileHover={{ scale: 1.05 }}
             >
               <motion.button
                 onClick={() => openQROverlay('whatsapp')}
-                className="flex flex-col items-center p-6 bg-white/10 backdrop-blur-md rounded-3xl hover:bg-white/20 transition-all duration-300 group"
+                className="flex flex-col items-center p-4 sm:p-6 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl hover:bg-white/20 transition-all duration-300 group w-full"
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="p-4 bg-green-600 rounded-2xl mb-3 group-hover:bg-green-500 transition-colors duration-300">
-                  <MessageCircle size={32} className="text-white" />
+                <div className="p-3 sm:p-4 bg-green-600 rounded-xl sm:rounded-2xl mb-2 sm:mb-3 group-hover:bg-green-500 transition-colors duration-300">
+                  <MessageCircle size={28} className="text-white sm:w-8 sm:h-8" />
                 </div>
-                <QrCode size={20} className="text-white/70 mb-2" />
-                <span className="text-white font-semibold">WhatsApp</span>
-                <span className="text-white/70 text-sm mt-1">Tap To Scan</span>
+                <QrCode size={18} className="text-white/70 mb-2 sm:w-5 sm:h-5" />
+                <span className="text-white font-semibold text-base sm:text-lg">WhatsApp</span>
+                <span className="text-white/70 text-xs sm:text-sm mt-1">Tap To Scan</span>
               </motion.button>
             </motion.div>
             
             <motion.div
-              className="text-center"
+              className="text-center w-full sm:w-auto"
               whileHover={{ scale: 1.05 }}
             >
               <motion.button
                 onClick={() => openQROverlay('instagram')}
-                className="flex flex-col items-center p-6 bg-white/10 backdrop-blur-md rounded-3xl hover:bg-white/20 transition-all duration-300 group"
+                className="flex flex-col items-center p-4 sm:p-6 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl hover:bg-white/20 transition-all duration-300 group w-full"
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="p-4 bg-pink-600 rounded-2xl mb-3 group-hover:bg-pink-500 transition-colors duration-300">
-                  <Instagram size={32} className="text-white" />
+                <div className="p-3 sm:p-4 bg-pink-600 rounded-xl sm:rounded-2xl mb-2 sm:mb-3 group-hover:bg-pink-500 transition-colors duration-300">
+                  <Instagram size={28} className="text-white sm:w-8 sm:h-8" />
                 </div>
-                <QrCode size={20} className="text-white/70 mb-2" />
-                <span className="text-white font-semibold">Instagram</span>
-                <span className="text-white/70 text-sm mt-1">Tap To Scan</span>
+                <QrCode size={18} className="text-white/70 mb-2 sm:w-5 sm:h-5" />
+                <span className="text-white font-semibold text-base sm:text-lg">Instagram</span>
+                <span className="text-white/70 text-xs sm:text-sm mt-1">Tap To Scan</span>
               </motion.button>
             </motion.div>
           </div>
         </motion.div>
 
-        <div className="mb-16">
+        <div className="mb-8 sm:mb-16 px-4">
           {/* Email Contact Card */}
           <motion.div
-            className="max-w-lg mx-auto bg-white/10 backdrop-blur-md rounded-3xl p-8 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:-translate-y-2"
+            className="max-w-lg mx-auto bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:-translate-y-2"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 mb-6 group-hover:scale-110 transition-transform duration-300">
-              <Mail size={32} />
+            <div className="inline-flex p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+              <Mail size={28} className="sm:w-8 sm:h-8" />
             </div>
-            <h3 className="text-2xl font-bold mb-2">Email</h3>
-            <p className="text-white/80 mb-4">yashmachhi1408@gmail.com</p>
+            <h3 className="text-xl sm:text-2xl font-bold mb-2">Email</h3>
+            <p className="text-white/80 mb-4 text-sm sm:text-base">yashmachhi1408@gmail.com</p>
             
             <motion.a
               href="mailto:yashmachhi1408@gmail.com"
@@ -284,43 +284,43 @@ export default function Contact() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="font-semibold mr-2">Send Email</span>
-              <ArrowRight size={16} />
+              <span className="font-semibold mr-2 text-sm sm:text-base">Send Email</span>
+              <ArrowRight size={14} className="sm:w-4 sm:h-4" />
             </motion.a>
           </motion.div>
         </div>
 
         {/* CTA Section */}
         <motion.div
-          className="text-center bg-white/10 backdrop-blur-md rounded-3xl p-12"
+          className="text-center bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-12 mx-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-4xl font-bold mb-6">Start Your Project Today</h3>
-          <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+          <h3 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6">Start Your Project Today</h3>
+          <p className="text-base sm:text-xl mb-6 sm:mb-8 text-white/90 max-w-2xl mx-auto">
             Join hundreds of satisfied clients who have transformed their brands with MacFlix. 
             Your creative journey starts with a simple message.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center">
             <motion.a
               href="https://wa.me/918780364562"
-              className="px-8 py-4 bg-white text-purple-600 font-bold rounded-2xl hover:bg-gray-100 transition-colors duration-300 flex items-center justify-center space-x-3"
+              className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-purple-600 font-bold rounded-xl sm:rounded-2xl hover:bg-gray-100 transition-colors duration-300 flex items-center justify-center space-x-2 sm:space-x-3"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              <MessageCircle size={24} />
-              <span>WhatsApp Now</span>
+              <MessageCircle size={20} className="sm:w-6 sm:h-6" />
+              <span className="text-sm sm:text-base">WhatsApp Now</span>
             </motion.a>
             <motion.a
               href="mailto:yashmachhi1408@gmail.com"
-              className="px-8 py-4 border-2 border-white text-white font-bold rounded-2xl hover:bg-white hover:text-purple-600 transition-all duration-300 flex items-center justify-center space-x-3"
+              className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-bold rounded-xl sm:rounded-2xl hover:bg-white hover:text-purple-600 transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Mail size={24} />
-              <span>Send Email</span>
+              <Mail size={20} className="sm:w-6 sm:h-6" />
+              <span className="text-sm sm:text-base">Send Email</span>
             </motion.a>
           </div>
         </motion.div>
