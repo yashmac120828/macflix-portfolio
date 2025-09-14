@@ -4,6 +4,13 @@ import { ChevronLeft, ChevronRight, ExternalLink, Eye, Play, X, Calendar, User, 
 import FrontSideCard from "../assets/Frontside Card Design.png"
 import FrontSideCard2 from "../assets/FrontSide.jpg"
 import cardb from "../assets/Red & Black Design Card.jpg"
+import B1 from "../assets/B1.png"
+import B2 from "../assets/B2.png"
+import BH1 from "../assets/Birthday Invi-1.png"
+import BH2 from "../assets/Birthday Invi-2.png"
+import MHAP from "../assets/Mahek Auto Point.png"
+import MHFM from "../assets/Maharaja Food Menu.png"
+
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -29,9 +36,13 @@ export default function Portfolio() {
       layout: 'portrait'
     },
     'Banner Design': {
-      aspectRatio: 'aspect-[16/9]',
+      aspectRatio: '',
       containerHeight: 'min-h-[400px]',
-      layout: 'landscape'
+      layout: 'landscape',
+      customAspectRatios: {
+        'B1': 'aspect-square', // 10x10
+        'B2': 'aspect-[3/2]'  // 6x4
+      }
     },
     'Pre-Wedding Posts': {
       aspectRatio: 'aspect-square',
@@ -90,44 +101,25 @@ export default function Portfolio() {
       projects: [
         { 
           id: 5, 
-          title: "Wedding Invitation Suite", 
-          image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400", 
+          title: "Birthday Invitation Card", 
+          image: BH1, 
           client: "Nisha Machhi",
           description: "Elegant wedding invitation suite with floral motifs and gold accents, perfect for a romantic celebration.",
           features: ["Floral designs", "Gold foil printing", "RSVP cards", "Thank you cards"],
-          completionDate: "2024-02-14",
-          projectType: "Wedding Stationery"
+          completionDate: "2024-01-26",
+          projectType: "Birthday Invitation Card"
         },
         { 
           id: 6, 
           title: "Birthday Party Invite", 
-          image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400", 
+          image: BH2, 
           client: "Nisha Machhi",
           description: "Fun and colorful birthday party invitation with playful elements and vibrant colors.",
           features: ["Colorful design", "Playful graphics", "Custom illustrations", "Premium paper"],
           completionDate: "2024-03-10",
           projectType: "Party Invitation"
-        },
-        { 
-          id: 7, 
-          title: "Anniversary Card", 
-          image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=400", 
-          client: "Nisha Machhi",
-          description: "Sophisticated anniversary invitation with romantic themes and elegant typography.",
-          features: ["Romantic design", "Elegant fonts", "Heart motifs", "Embossed elements"],
-          completionDate: "2024-03-18",
-          projectType: "Anniversary Stationery"
-        },
-        { 
-          id: 8, 
-          title: "Event Invitation", 
-          image: "https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=400", 
-          client: "Nisha Machhi",
-          description: "Corporate event invitation with professional design and clear event details.",
-          features: ["Professional layout", "Event timeline", "RSVP tracking", "Brand integration"],
-          completionDate: "2024-04-05",
-          projectType: "Corporate Event"
-        },
+        }
+        
       ]
     },
     {
@@ -137,33 +129,14 @@ export default function Portfolio() {
         { 
           id: 9, 
           title: "Fine Dining Menu", 
-          image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?w=400", 
+          image: MHFM, 
           client: "Maharaja Foods",
           description: "Elegant fine dining menu with sophisticated typography and premium feel.",
           features: ["Premium paper", "Gold accents", "Fine typography", "Food photography"],
           completionDate: "2024-01-20",
           projectType: "Restaurant Menu"
-        },
-        { 
-          id: 10, 
-          title: "Cafe Menu", 
-          image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400", 
-          client: "Maharaja Foods",
-          description: "Casual cafe menu with warm colors and friendly design approach.",
-          features: ["Warm colors", "Casual typography", "Cozy feel", "Easy to read"],
-          completionDate: "2024-02-05",
-          projectType: "Cafe Menu"
-        },
-        { 
-          id: 11, 
-          title: "Bar Menu", 
-          image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400", 
-          client: "Maharaja Foods",
-          description: "Stylish bar menu with dark theme and modern cocktail presentation.",
-          features: ["Dark theme", "Modern design", "Cocktail focus", "Premium feel"],
-          completionDate: "2024-02-28",
-          projectType: "Bar Menu"
-        },
+        }
+       
       ]
     },
     {
@@ -173,7 +146,7 @@ export default function Portfolio() {
         { 
           id: 13, 
           title: "Blood Donation Camp Banner", 
-          image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600", 
+          image: B1, 
           client: "Help Warriors Foundation",
           description: "Impactful banner design for blood donation camp with clear messaging and call-to-action.",
           features: ["Bold typography", "Medical imagery", "Clear CTA", "High impact"],
@@ -182,24 +155,15 @@ export default function Portfolio() {
         },
         { 
           id: 14, 
-          title: "Health Campaign Banner", 
-          image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600", 
+          title: "Blood Donation Camp Banner", 
+          image: B2, 
           client: "Help Warriors Foundation",
           description: "Health awareness campaign banner with professional medical design.",
           features: ["Medical theme", "Professional look", "Informative", "Trust building"],
-          completionDate: "2024-02-20",
+          completionDate: "2024-01-15",
           projectType: "Health Campaign"
-        },
-        { 
-          id: 15, 
-          title: "Event Promotion Banner", 
-          image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600", 
-          client: "Help Warriors Foundation",
-          description: "Dynamic event promotion banner with vibrant colors and engaging design.",
-          features: ["Vibrant colors", "Event details", "Engaging design", "Multi-platform"],
-          completionDate: "2024-03-12",
-          projectType: "Event Promotion"
-        },
+        }
+        
       ]
     },
     {
@@ -438,7 +402,11 @@ export default function Portfolio() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className={`relative ${currentConfig.aspectRatio} w-48 md:w-64 rounded-2xl overflow-hidden shadow-lg bg-white border-2 border-gray-200`}>
+              <div className={`relative ${
+                currentCategory.name === 'Banner Design' 
+                  ? currentConfig.customAspectRatios[visibleSlides.prev.image.includes('B1') ? 'B1' : 'B2']
+                  : currentConfig.aspectRatio
+              } w-48 md:w-64 rounded-2xl overflow-hidden shadow-lg bg-white border-2 border-gray-200`}>
                 <img
                   src={visibleSlides.prev.image}
                   alt={visibleSlides.prev.title}
@@ -460,7 +428,11 @@ export default function Portfolio() {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <div className={`relative ${currentConfig.aspectRatio} w-full max-w-[300px] md:max-w-[450px] rounded-3xl overflow-hidden shadow-2xl bg-white`}
+              <div className={`relative ${
+                currentCategory.name === 'Banner Design' 
+                  ? currentConfig.customAspectRatios[visibleSlides.current.image.includes('B1') ? 'B1' : 'B2']
+                  : currentConfig.aspectRatio
+              } w-full max-w-[300px] md:max-w-[450px] rounded-3xl overflow-hidden shadow-2xl bg-white`}
                    style={{ 
                      border: '4px solid transparent',
                      backgroundImage: 'linear-gradient(white, white), linear-gradient(45deg, #9333ea, #ec4899)',
@@ -513,7 +485,11 @@ export default function Portfolio() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className={`relative ${currentConfig.aspectRatio} w-48 md:w-64 rounded-2xl overflow-hidden shadow-lg bg-white border-2 border-gray-200`}>
+              <div className={`relative ${
+                currentCategory.name === 'Banner Design' 
+                  ? currentConfig.customAspectRatios[visibleSlides.next.image.includes('B1') ? 'B1' : 'B2']
+                  : currentConfig.aspectRatio
+              } w-48 md:w-64 rounded-2xl overflow-hidden shadow-lg bg-white border-2 border-gray-200`}>
                 <img
                   src={visibleSlides.next.image}
                   alt={visibleSlides.next.title}

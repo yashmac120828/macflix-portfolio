@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import React, { Component } from 'react';
+import logo from '../assets/logo.png';
 
 import { 
   PenTool, 
@@ -112,23 +113,26 @@ export default function Services() {
               }}
             >
               {duplicatedServices.slice(0, 12).map((service, index) => (
-                <motion.div
-                  key={`row1-${index}`}
-                  className="group relative bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden flex-shrink-0 w-72 border border-white/20"
-                  whileHover={{ scale: 1.02 }}
-                  style={{
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)'
-                  }}
-                >
-                  {/* Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                  
-                  {/* Icon */}
-                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    {React.cloneElement(service.icon, { size: 32 })}
-                  </div>
-                  
-                  <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
+              <motion.div
+              key={`row1-${index}`}
+              className="group relative bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden flex-shrink-0 w-72 border border-white/20"
+              whileHover={{ scale: 1.02 }}
+              style={{
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              {/* Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              {/* MacFlix Logo */}
+              <div className="absolute top-4 right-4 w-12 h-12 opacity-90">
+                <img src={logo} alt="MacFlix" className="w-full h-full object-contain" />
+              </div>
+              
+              {/* Icon */}
+              <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                {React.cloneElement(service.icon, { size: 32 })}
+              </div>                  <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
                     {service.title}
                   </h3>
                   
@@ -160,23 +164,26 @@ export default function Services() {
               }}
             >
               {duplicatedServices.slice(12, 24).map((service, index) => (
-                <motion.div
-                  key={`row2-${index}`}
-                  className="group relative bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden flex-shrink-0 w-72 border border-white/20"
-                  whileHover={{ scale: 1.02 }}
-                  style={{
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)'
-                  }}
-                >
-                  {/* Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                  
-                  {/* Icon */}
-                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    {React.cloneElement(service.icon, { size: 32 })}
-                  </div>
-                  
-                  <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
+              <motion.div
+              key={`row2-${index}`}
+              className="group relative bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden flex-shrink-0 w-72 border border-white/20"
+              whileHover={{ scale: 1.02 }}
+              style={{
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              {/* Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              {/* MacFlix Logo */}
+              <div className="absolute top-4 right-4 w-12 h-12 opacity-90">
+                <img src={logo} alt="MacFlix" className="w-full h-full object-contain" />
+              </div>
+              
+              {/* Icon */}
+              <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                {React.cloneElement(service.icon, { size: 32 })}
+              </div>                  <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
                     {service.title}
                   </h3>
                   
@@ -208,6 +215,11 @@ export default function Services() {
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              {/* MacFlix Logo */}
+              <div className="absolute top-4 right-4 w-10 sm:w-12 h-10 sm:h-12 opacity-90">
+                <img src={logo} alt="MacFlix" className="w-full h-full object-contain" />
+              </div>
               
               {/* Icon */}
               <div className={`inline-flex p-3 sm:p-4 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>

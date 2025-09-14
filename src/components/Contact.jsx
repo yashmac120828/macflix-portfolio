@@ -27,60 +27,126 @@ export default function Contact() {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     
-    // Set canvas size
-    canvas.width = 800
-    canvas.height = 500
+    // Set canvas size (16:9 ratio for better visibility)
+    canvas.width = 1200
+    canvas.height = 675
     
-    // Create gradient background
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-    gradient.addColorStop(0, '#000000')
-    gradient.addColorStop(1, '#333333')
-    ctx.fillStyle = gradient
+    // Create main background
+    ctx.fillStyle = '#000000'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     
-    // Add logo placeholder (you can replace this with actual logo loading)
-    const logoGradient = ctx.createLinearGradient(50, 50, 130, 130)
-    logoGradient.addColorStop(0, '#9333ea')
-    logoGradient.addColorStop(1, '#ec4899')
-    ctx.fillStyle = logoGradient
-    ctx.fillRect(50, 50, 80, 80)
-    ctx.fillStyle = '#ffffff'
-    ctx.font = 'bold 24px Arial'
-    ctx.textAlign = 'center'
-    ctx.fillText('LOGO', 90, 100)
+    // Add purple gradient overlay
+    const overlay = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+    overlay.addColorStop(0, 'rgba(88, 28, 135, 0.2)') // from-purple-900/20
+    overlay.addColorStop(1, 'rgba(219, 39, 119, 0.2)') // to-pink-900/20
+    ctx.fillStyle = overlay
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
     
-    // Add company name next to logo
-    ctx.fillStyle = '#ffffff'
-    ctx.font = 'bold 48px Arial'
-    ctx.textAlign = 'left'
-    ctx.fillText('MacFlix', 150, 90)
+    // Create and load logo
+    const logoImg = new Image()
+    logoImg.src = logo
     
-    // Add tagline
-    ctx.font = '24px Arial'
-    ctx.fillStyle = '#cccccc'
-    ctx.fillText('Creative Design Solutions', 150, 120)
-    
-    // Add contact details
-    ctx.font = '18px Arial'
-    ctx.textAlign = 'left'
-    ctx.fillStyle = '#ffffff'
-    ctx.fillText('Email: yashmachhi1408@gmail.com', 50, 200)
-    ctx.fillText('Phone: +91 8780364562', 50, 230)
-    ctx.fillText('Instagram: @mac_flix', 50, 260)
-    
-    // Add services
-    ctx.fillStyle = '#cccccc'
-    ctx.fillText('Services:', 50, 320)
-    ctx.font = '16px Arial'
-    ctx.fillText('• Logo Design • Banner Design • Video Editing', 50, 350)
-    ctx.fillText('• Photo Editing • Instagram Reels • YouTube Content', 50, 370)
-    ctx.fillText('• Event Cards • Visiting Cards', 50, 390)
-    
-    // Download the image
-    const link = document.createElement('a')
-    link.download = 'MacFlix-Business-Card.png'
-    link.href = canvas.toDataURL()
-    link.click()
+    logoImg.onload = () => {
+      // Add logo with proper scaling
+      const logoSize = 120
+      const padding = 60
+      ctx.drawImage(logoImg, padding, padding, logoSize, logoSize)
+      
+      // Add company name with gradient
+      const gradient = ctx.createLinearGradient(padding + logoSize + 20, 0, padding + logoSize + 400, 0)
+      gradient.addColorStop(0, '#A78BFA') // purple-400
+      gradient.addColorStop(1, '#F472B6') // pink-400
+      ctx.fillStyle = gradient
+      ctx.font = 'bold 72px Arial'
+      ctx.fillText('MacFlix', padding + logoSize + 20, padding + 70)
+      
+      // Add tagline
+      ctx.font = '32px Arial'
+      ctx.fillStyle = 'rgba(209, 213, 219, 0.8)' // text-gray-300
+      ctx.fillText('Where Creativity Meets Precision', padding + logoSize + 20, padding + 120)
+      
+      // Add divider
+      const dividerY = 220
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(padding, dividerY)
+      ctx.lineTo(canvas.width - padding, dividerY)
+      ctx.stroke()
+      
+      // Contact Info Section
+      ctx.font = 'bold 36px Arial'
+      ctx.fillStyle = '#A78BFA' // purple-400
+      ctx.fillText('Contact Info', padding, dividerY + 60)
+      
+      ctx.font = '28px Arial'
+      ctx.fillStyle = 'rgba(209, 213, 219, 0.8)' // text-gray-300
+      ctx.fillText('Email: yashmachhi1408@gmail.com', padding, dividerY + 120)
+      ctx.fillText('Phone: +91 8780364562', padding, dividerY + 170)
+      ctx.fillText('Instagram: @mac_flix', padding, dividerY + 220)
+      
+      // Services Section
+      ctx.font = 'bold 36px Arial'
+      ctx.fillStyle = '#F472B6' // pink-400
+      ctx.fillText('Services', canvas.width/2 + 50, dividerY + 60)
+      
+      const services = [
+        '• Logo Design',
+        '• Banner Design',
+        '• Video Editing',
+        '• Instagram Reels',
+        '• Event Cards'
+      ]
+      
+      ctx.font = '28px Arial'
+      ctx.fillStyle = 'rgba(209, 213, 219, 0.8)' // text-gray-300
+      services.forEach((service, index) => {
+        ctx.fillText(service, canvas.width/2 + 50, dividerY + 120 + (index * 50))
+      })
+      
+      // Add decorative corner elements
+      const cornerSize = 40
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'
+      ctx.lineWidth = 2
+      
+      // Top left corner
+      ctx.beginPath()
+      ctx.moveTo(30, 30)
+      ctx.lineTo(30, 30 + cornerSize)
+      ctx.moveTo(30, 30)
+      ctx.lineTo(30 + cornerSize, 30)
+      ctx.stroke()
+      
+      // Top right corner
+      ctx.beginPath()
+      ctx.moveTo(canvas.width - 30, 30)
+      ctx.lineTo(canvas.width - 30 - cornerSize, 30)
+      ctx.moveTo(canvas.width - 30, 30)
+      ctx.lineTo(canvas.width - 30, 30 + cornerSize)
+      ctx.stroke()
+      
+      // Bottom left corner
+      ctx.beginPath()
+      ctx.moveTo(30, canvas.height - 30)
+      ctx.lineTo(30, canvas.height - 30 - cornerSize)
+      ctx.moveTo(30, canvas.height - 30)
+      ctx.lineTo(30 + cornerSize, canvas.height - 30)
+      ctx.stroke()
+      
+      // Bottom right corner
+      ctx.beginPath()
+      ctx.moveTo(canvas.width - 30, canvas.height - 30)
+      ctx.lineTo(canvas.width - 30 - cornerSize, canvas.height - 30)
+      ctx.moveTo(canvas.width - 30, canvas.height - 30)
+      ctx.lineTo(canvas.width - 30, canvas.height - 30 - cornerSize)
+      ctx.stroke()
+      
+      // Download the image
+      const link = document.createElement('a')
+      link.download = 'MacFlix-Business-Card.png'
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    }
   }
 
   const openQROverlay = (type) => {
