@@ -10,6 +10,9 @@ import BH1 from "../assets/Birthday Invi-1.png"
 import BH2 from "../assets/Birthday Invi-2.png"
 import MHAP from "../assets/Mahek Auto Point.png"
 import MHFM from "../assets/Maharaja Food Menu.png"
+import Video1 from "../assets/1027 (1)(1).mp4"
+import Video2 from "../assets/1027.mp4"
+import Video3 from "../assets/1029 (1).mp4"
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState(0)
@@ -44,20 +47,54 @@ export default function Portfolio() {
         'B2': 'aspect-[3/2]'  // 6x4
       }
     },
-    'Pre-Wedding Posts': {
-      aspectRatio: 'aspect-square',
-      containerHeight: 'min-h-[500px]',
-      layout: 'square'
-    },
-    'Social Media': {
+    'Video Editing': {
       aspectRatio: 'aspect-[9/16]',
       containerHeight: 'min-h-[700px]',
-      layout: 'story'
+      layout: 'video'
     }
   }
 
   // Portfolio categories
   const categories = [
+     {
+      name: "Video Editing",
+      description: "Professional video editing and motion graphics",
+      projects: [
+        { 
+          id: 21, 
+          title: "Ayodhya Diwali Celebration",
+          type: "video",
+          image: Video1,
+          client: "Self Edited Reel",
+          description: "A great celebration of ayodhya diwali",
+          features: ["Motion graphics", "Edge Cutted", "Color grading", "Sound design"],
+          completionDate: "2024-01-05",
+          projectType: "Instagram Reel"
+        },
+        { 
+          id: 22, 
+          title: "Singham Again", 
+          type: "video",
+          image: Video2,
+          client: "Self Edited Reel",
+          description: "Professional video with elegant animations and clear messaging.",
+          features: ["Professional editing", "Custom animations", "Voice-over", "Background music"],
+          completionDate: "2024-02-12",
+          projectType: "Instagram Reels"
+        },
+        { 
+          id: 23, 
+          title: "Pavagadh Hills Editing ", 
+          type: "video",
+          image: Video3,
+          client: "Self Edited Reel",
+          description: "A soft touched hills of pavagadh.",
+          features: ["Quick cuts", "Text animations", "Visual effects", "Music sync"],
+          completionDate: "2024-03-08",
+          projectType: "Social Ad"
+        }
+      ]
+    },
     {
       name: "Visiting Cards",
       description: "Professional business card designs with modern layouts",
@@ -165,99 +202,8 @@ export default function Portfolio() {
         }
         
       ]
-    },
-    {
-      name: "Pre-Wedding Posts",
-      description: "Beautiful pre-wedding social media content and announcements",
-      projects: [
-        { 
-          id: 17, 
-          title: "Engagement Announcement", 
-          image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400", 
-          client: "Wedding Couple",
-          description: "Romantic engagement announcement with beautiful typography and floral elements.",
-          features: ["Romantic design", "Floral elements", "Beautiful fonts", "Social ready"],
-          completionDate: "2024-01-10",
-          projectType: "Wedding Social"
-        },
-        { 
-          id: 18, 
-          title: "Save the Date Post", 
-          image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=400", 
-          client: "Wedding Couple",
-          description: "Elegant save the date social media post with wedding details and romantic theme.",
-          features: ["Date focus", "Elegant design", "Wedding theme", "Share-worthy"],
-          completionDate: "2024-01-25",
-          projectType: "Wedding Social"
-        },
-        { 
-          id: 19, 
-          title: "Wedding Countdown", 
-          image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400", 
-          client: "Wedding Couple",
-          description: "Exciting wedding countdown post to build anticipation for the big day.",
-          features: ["Countdown design", "Excitement building", "Interactive feel", "Celebration theme"],
-          completionDate: "2024-02-15",
-          projectType: "Wedding Social"
-        },
-        { 
-          id: 20, 
-          title: "Couple Introduction", 
-          image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400", 
-          client: "Wedding Couple",
-          description: "Beautiful couple introduction post with their story and journey together.",
-          features: ["Personal story", "Couple focus", "Journey theme", "Emotional connect"],
-          completionDate: "2024-03-01",
-          projectType: "Wedding Social"
-        }
-      ]
-    },
-    {
-      name: "Social Media",
-      description: "Engaging social media posts and story templates",
-      projects: [
-        { 
-          id: 21, 
-          title: "Instagram Story Templates", 
-          image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400", 
-          client: "Beauty Brand",
-          description: "Modern Instagram story templates with beauty brand aesthetic and engaging layouts.",
-          features: ["Story format", "Brand colors", "Template series", "Beauty focus"],
-          completionDate: "2024-01-05",
-          projectType: "Social Templates"
-        },
-        { 
-          id: 22, 
-          title: "Facebook Post Design", 
-          image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400", 
-          client: "Local Business",
-          description: "Professional Facebook post design for local business promotion and engagement.",
-          features: ["Business focus", "Local appeal", "Professional look", "Engagement driven"],
-          completionDate: "2024-02-12",
-          projectType: "Business Social"
-        },
-        { 
-          id: 23, 
-          title: "LinkedIn Company Post", 
-          image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400", 
-          client: "Corporate Brand",
-          description: "Corporate LinkedIn post design with professional aesthetics and business messaging.",
-          features: ["Corporate design", "Professional tone", "Business messaging", "LinkedIn optimized"],
-          completionDate: "2024-03-08",
-          projectType: "Corporate Social"
-        },
-        { 
-          id: 24, 
-          title: "YouTube Thumbnail", 
-          image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400", 
-          client: "Content Creator",
-          description: "Eye-catching YouTube thumbnail design to maximize click-through rates.",
-          features: ["High contrast", "Eye-catching", "Click-worthy", "YouTube optimized"],
-          completionDate: "2024-03-20",
-          projectType: "Video Content"
-        }
-      ]
     }
+   
   ]
 
   const currentCategory = categories[activeCategory]
@@ -288,12 +234,29 @@ export default function Portfolio() {
   }
 
   const handleCategoryChange = (index) => {
-    setActiveCategory(index)
-    setCurrentSlide(0)
+    // First, trigger a fade-out effect
+    const carousel = document.querySelector('.carousel-container')
+    if (carousel) {
+      carousel.style.opacity = '0'
+      carousel.style.transform = 'scale(0.95)'
+      carousel.style.transition = 'all 0.3s ease'
+    }
+
+    // After a short delay, update the category and reset the carousel
+    setTimeout(() => {
+      setActiveCategory(index)
+      setCurrentSlide(0)
+      
+      // Then fade back in
+      if (carousel) {
+        carousel.style.opacity = '1'
+        carousel.style.transform = 'scale(1)'
+      }
+    }, 300)
   }
 
   const openModal = (project, type = 'view') => {
-    setModalProject({ ...project, viewType: type })
+    setModalProject({ ...project, viewType: type, muted: true })
     setShowModal(true)
     setIsAutoPlay(false)
   }
@@ -348,17 +311,30 @@ export default function Portfolio() {
           {categories.map((category, index) => (
             <motion.button
               key={category.name}
-              onClick={() => handleCategoryChange(index)}
+              onClick={() => {
+                handleCategoryChange(index);
+                // Smooth scroll to portfolio section when changing category
+                document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+              }}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 activeCategory === index
                   ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg transform scale-105'
                   : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
               }`}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+                y: -2
+              }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ 
+                duration: 0.3,
+                delay: index * 0.1,
+                type: "spring",
+                stiffness: 300
+              }}
             >
               {category.name}
             </motion.button>
@@ -393,7 +369,7 @@ export default function Portfolio() {
         </div>
 
         {/* 3-Slide Carousel */}
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-7xl mx-auto carousel-container" style={{ transition: 'all 0.3s ease' }}>
           <div className={`flex items-center justify-center gap-2 md:gap-6 ${currentConfig.containerHeight}`}>
             {/* Previous Slide - Hidden on mobile */}
             <motion.div
@@ -407,11 +383,20 @@ export default function Portfolio() {
                   ? currentConfig.customAspectRatios[visibleSlides.prev.image.includes('B1') ? 'B1' : 'B2']
                   : currentConfig.aspectRatio
               } w-48 md:w-64 rounded-2xl overflow-hidden shadow-lg bg-white border-2 border-gray-200`}>
-                <img
-                  src={visibleSlides.prev.image}
-                  alt={visibleSlides.prev.title}
-                  className="w-full h-full object-cover"
-                />
+                {visibleSlides.prev.type === 'video' ? (
+                  <video
+                    src={visibleSlides.prev.image}
+                    className="w-full h-full object-cover"
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={visibleSlides.prev.image}
+                    alt={visibleSlides.prev.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-2 left-2 right-2 text-white">
                   <h5 className="text-sm font-semibold truncate">{visibleSlides.prev.title}</h5>
@@ -439,11 +424,22 @@ export default function Portfolio() {
                      backgroundOrigin: 'border-box',
                      backgroundClip: 'content-box, border-box'
                    }}>
-                <img
-                  src={visibleSlides.current.image}
-                  alt={visibleSlides.current.title}
-                  className="w-full h-full object-cover rounded-2xl"
-                />
+                {visibleSlides.current.type === 'video' ? (
+                  <video
+                    src={visibleSlides.current.image}
+                    className="w-full h-full object-cover rounded-2xl"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={visibleSlides.current.image}
+                    alt={visibleSlides.current.title}
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-2xl"></div>
                 
               </div>
@@ -490,11 +486,20 @@ export default function Portfolio() {
                   ? currentConfig.customAspectRatios[visibleSlides.next.image.includes('B1') ? 'B1' : 'B2']
                   : currentConfig.aspectRatio
               } w-48 md:w-64 rounded-2xl overflow-hidden shadow-lg bg-white border-2 border-gray-200`}>
-                <img
-                  src={visibleSlides.next.image}
-                  alt={visibleSlides.next.title}
-                  className="w-full h-full object-cover"
-                />
+                {visibleSlides.next.type === 'video' ? (
+                  <video
+                    src={visibleSlides.next.image}
+                    className="w-full h-full object-cover"
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={visibleSlides.next.image}
+                    alt={visibleSlides.next.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-2 left-2 right-2 text-white">
                   <h5 className="text-sm font-semibold truncate">{visibleSlides.next.title}</h5>
@@ -505,44 +510,85 @@ export default function Portfolio() {
           </div>
 
           {/* Navigation Arrows */}
-          <button
+          <motion.button
             onClick={prevSlide}
-            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 md:p-3 bg-white/90 backdrop-blur-md rounded-full text-gray-800 hover:bg-white shadow-lg transition-all duration-300"
+            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 md:p-3 bg-white/90 backdrop-blur-md rounded-full text-gray-800 shadow-lg"
             onMouseEnter={() => setIsAutoPlay(false)}
             onMouseLeave={() => setIsAutoPlay(true)}
+            whileHover={{ 
+              x: -5,
+              backgroundColor: "rgba(255, 255, 255, 1)",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+            }}
+            whileTap={{ scale: 0.9 }}
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, type: "spring" }}
           >
             <ChevronLeft size={20} className="md:w-6 md:h-6" />
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={nextSlide}
-            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 md:p-3 bg-white/90 backdrop-blur-md rounded-full text-gray-800 hover:bg-white shadow-lg transition-all duration-300"
+            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 md:p-3 bg-white/90 backdrop-blur-md rounded-full text-gray-800 shadow-lg"
             onMouseEnter={() => setIsAutoPlay(false)}
             onMouseLeave={() => setIsAutoPlay(true)}
+            whileHover={{ 
+              x: 5,
+              backgroundColor: "rgba(255, 255, 255, 1)",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+            }}
+            whileTap={{ scale: 0.9 }}
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, type: "spring" }}
           >
             <ChevronRight size={20} className="md:w-6 md:h-6" />
-          </button>
+          </motion.button>
 
           {/* Progress Indicators */}
-          <div className="flex justify-center mt-8 space-x-3">
+          <motion.div 
+            className="flex justify-center mt-8 space-x-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             {currentCategory.projects.map((_, index) => (
-              <button
+              <motion.button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                className={`w-3 h-3 rounded-full ${
                   currentSlide === index 
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 scale-125' 
+                    ? 'bg-gradient-to-r from-purple-600 to-pink-600' 
                     : 'bg-gray-300 hover:bg-gray-400'
                 }`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                animate={{ 
+                  scale: currentSlide === index ? 1.25 : 1,
+                  transition: { type: "spring", stiffness: 300 }
+                }}
+                initial={false}
               />
             ))}
-          </div>
+          </motion.div>
 
           {/* Slide Counter */}
-          <div className="text-center mt-4">
-            <span className="text-sm text-gray-500">
+          <motion.div 
+            className="text-center mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.span 
+              key={currentSlide}
+              className="text-sm text-gray-500 inline-block"
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               {currentSlide + 1} of {totalSlides}
-            </span>
-          </div>
+            </motion.span>
+          </motion.div>
         </div>
 
         {/* Modal for View/Details */}
@@ -572,28 +618,116 @@ export default function Portfolio() {
                   </button>
                   
                   {modalProject.viewType === 'view' ? (
-                    /* View Mode - Large Image */
+                    /* View Mode - Large Image/Video */
                     <div className="relative">
-                      <img
-                        src={modalProject.image}
-                        alt={modalProject.title}
-                        className="w-full h-96 md:h-[500px] object-cover rounded-t-3xl"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8 text-white rounded-t-3xl">
-                        <h3 className="text-2xl md:text-3xl font-bold mb-2">{modalProject.title}</h3>
-                        <p className="text-lg opacity-90">Client: {modalProject.client}</p>
-                      </div>
+                      {modalProject.type === 'video' ? (
+                        <div className="flex flex-col md:flex-row h-[80vh] max-h-[800px]">
+                          {/* Video Section with 9:16 aspect ratio */}
+                          <div className="md:w-1/2 relative flex items-center justify-center p-4 bg-black/90">
+                            <div className="h-full aspect-[9/16] relative max-h-full">
+                              <video
+                                src={modalProject.image}
+                                className="w-full h-full object-contain rounded-xl"
+                                autoPlay
+                                loop
+                                playsInline
+                                controls
+                                id="modalVideo"
+                              />
+                            </div>
+                            {/* Sound Control */}
+                            <button
+                              onClick={() => {
+                                const video = document.getElementById('modalVideo');
+                                if (video) {
+                                  video.muted = !video.muted;
+                                }
+                              }}
+                              className="absolute bottom-8 right-8 p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors shadow-lg z-10"
+                            >
+                              {document.getElementById('modalVideo')?.muted ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/>
+                                </svg>
+                              ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                                </svg>
+                              )}
+                            </button>
+                          </div>
+                          {/* Details Section */}
+                          <div className="md:w-1/2 p-8 bg-white overflow-y-auto">
+                            <div className="max-w-lg mx-auto">
+                              <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">{modalProject.title}</h3>
+                              <div className="flex items-center space-x-4 text-gray-600 mb-6">
+                                <div className="flex items-center space-x-2">
+                                  <User size={18} />
+                                  <span>{modalProject.client}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Calendar size={18} />
+                                  <span>{modalProject.completionDate}</span>
+                                </div>
+                              </div>
+                              <div className="space-y-6">
+                                <div>
+                                  <h4 className="text-lg font-semibold text-gray-800 mb-2">Description</h4>
+                                  <p className="text-gray-600 leading-relaxed">{modalProject.description}</p>
+                                </div>
+                                <div>
+                                  <h4 className="text-lg font-semibold text-gray-800 mb-3">Key Features</h4>
+                                  <ul className="space-y-2">
+                                    {modalProject.features?.map((feature, index) => (
+                                      <li key={index} className="flex items-center space-x-2">
+                                        <div className="w-2 h-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></div>
+                                        <span className="text-gray-600">{feature}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <img
+                            src={modalProject.image}
+                            alt={modalProject.title}
+                            className="w-full h-96 md:h-[500px] object-cover rounded-t-3xl"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8 text-white rounded-t-3xl">
+                            <h3 className="text-2xl md:text-3xl font-bold mb-2">{modalProject.title}</h3>
+                            <p className="text-lg opacity-90">Client: {modalProject.client}</p>
+                          </div>
+                        </>
+                      )}
                     </div>
                   ) : (
                     /* Details Mode - Project Information */
                     <div className="p-8">
                       <div className="flex flex-col md:flex-row gap-8">
                         <div className="md:w-1/2">
-                          <img
-                            src={modalProject.image}
-                            alt={modalProject.title}
-                            className="w-full h-64 md:h-80 object-cover rounded-2xl shadow-lg"
-                          />
+                          {modalProject.type === 'video' ? (
+                            <video
+                              src={modalProject.image}
+                              className="w-full h-64 md:h-80 object-cover rounded-2xl shadow-lg"
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              controls
+                            />
+                          ) : (
+                            <img
+                              src={modalProject.image}
+                              alt={modalProject.title}
+                              className="w-full h-64 md:h-80 object-cover rounded-2xl shadow-lg"
+                            />
+                          )}
                         </div>
                         <div className="md:w-1/2 space-y-6">
                           <div>

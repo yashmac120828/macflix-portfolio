@@ -28,7 +28,7 @@ export default function Navigation() {
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
-          <Logo />
+          <Logo textColor={scrolled ? "gradient" : "white"} />
           
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">

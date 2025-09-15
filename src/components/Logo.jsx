@@ -1,11 +1,10 @@
 import logo from "../assets/logo.png"
 
-export default function Logo({ className, variant = "default" }) {
+export default function Logo({ className, variant = "default", textColor = "gradient" }) {
   if (variant === "hero" || variant==="footer") {
     return (
       <div className={`flex items-center justify-center ${className}`}>
         <img src={logo} alt="MacFlix Logo" className="w-25 h-25 drop-shadow-lg" />
-        
       </div>
     )
   }
@@ -13,7 +12,13 @@ export default function Logo({ className, variant = "default" }) {
   return (
     <div className={`flex items-center justify-center ${className}`}>
       <img src={logo} alt="MacFlix Logo" className="w-8 h-8" />
-      <span className="ml-2 text-xl font-bold bg-macflix-gradient bg-clip-text text-transparent">
+      <span className={`ml-2 text-xl font-bold ${
+        textColor === "gradient" 
+          ? "bg-macflix-gradient bg-clip-text text-transparent"
+          : textColor === "white" 
+            ? "text-white"
+            : "text-macflix-textdark"
+      }`}>
         MacFlix
       </span>
     </div>

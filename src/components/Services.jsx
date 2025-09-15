@@ -140,10 +140,7 @@ export default function Services() {
                     {service.description}
                   </p>
 
-                  <div className="flex items-center text-purple-600 group-hover:translate-x-2 transition-transform duration-300">
-                    <span className="font-semibold mr-2 text-sm">Learn More</span>
-                    <ArrowRight size={14} />
-                  </div>
+                  
                 </motion.div>
               ))}
             </motion.div>
@@ -191,10 +188,7 @@ export default function Services() {
                     {service.description}
                   </p>
 
-                  <div className="flex items-center text-purple-600 group-hover:translate-x-2 transition-transform duration-300">
-                    <span className="font-semibold mr-2 text-sm">Learn More</span>
-                    <ArrowRight size={14} />
-                  </div>
+                 
                 </motion.div>
               ))}
             </motion.div>
@@ -234,10 +228,7 @@ export default function Services() {
                 {service.description}
               </p>
 
-              <div className="flex items-center text-purple-600 group-hover:translate-x-2 transition-transform duration-300">
-                <span className="text-sm font-semibold mr-2">Learn More</span>
-                <ArrowRight size={14} />
-              </div>
+             
             </motion.div>
           ))}
         </div>
