@@ -10,9 +10,7 @@ import BH1 from "../assets/Birthday Invi-1.png"
 import BH2 from "../assets/Birthday Invi-2.png"
 import MHAP from "../assets/Mahek Auto Point.png"
 import MHFM from "../assets/Maharaja Food Menu.png"
-import Video1 from "../assets/1027 (1)(1).mp4"
-import Video2 from "../assets/1027.mp4"
-import Video3 from "../assets/1029 (1).mp4"
+
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState(0)
@@ -48,53 +46,15 @@ export default function Portfolio() {
       }
     },
     'Video Editing': {
-      aspectRatio: 'aspect-[9/16]',
-      containerHeight: 'min-h-[700px]',
-      layout: 'video'
+      aspectRatio: 'aspect-square',
+      containerHeight: 'min-h-[500px]',
+      layout: 'message'
     }
   }
 
   // Portfolio categories
   const categories = [
-     {
-      name: "Video Editing",
-      description: "Professional video editing and motion graphics",
-      projects: [
-        { 
-          id: 21, 
-          title: "Ayodhya Diwali Celebration",
-          type: "video",
-          image: Video1,
-          client: "Self Edited Reel",
-          description: "A great celebration of ayodhya diwali",
-          features: ["Motion graphics", "Edge Cutted", "Color grading", "Sound design"],
-          completionDate: "2024-01-05",
-          projectType: "Instagram Reel"
-        },
-        { 
-          id: 22, 
-          title: "Singham Again", 
-          type: "video",
-          image: Video2,
-          client: "Self Edited Reel",
-          description: "Professional video with elegant animations and clear messaging.",
-          features: ["Professional editing", "Custom animations", "Voice-over", "Background music"],
-          completionDate: "2024-02-12",
-          projectType: "Instagram Reels"
-        },
-        { 
-          id: 23, 
-          title: "Pavagadh Hills Editing ", 
-          type: "video",
-          image: Video3,
-          client: "Self Edited Reel",
-          description: "A soft touched hills of pavagadh.",
-          features: ["Quick cuts", "Text animations", "Visual effects", "Music sync"],
-          completionDate: "2024-03-08",
-          projectType: "Social Ad"
-        }
-      ]
-    },
+    
     {
       name: "Visiting Cards",
       description: "Professional business card designs with modern layouts",
@@ -201,6 +161,23 @@ export default function Portfolio() {
           projectType: "Health Campaign"
         }
         
+      ]
+    },
+    {
+      name: "Video Editing",
+      description: "Professional video editing and motion graphics",
+      projects: [
+        {
+          id: 21,
+          title: "Check Our Video Edits on Instagram",
+          type: "message",
+          image: "https://instagram.com/macflix_bhautik",
+          client: "MACFLIX",
+          description: "Follow us on Instagram to see our latest video edits and creative content.",
+          features: ["Professional Reels", "Motion Graphics", "Creative Edits", "Social Media Content"],
+          completionDate: "2024-01-05",
+          projectType: "Instagram Portfolio"
+        }
       ]
     }
    
@@ -424,15 +401,24 @@ export default function Portfolio() {
                      backgroundOrigin: 'border-box',
                      backgroundClip: 'content-box, border-box'
                    }}>
-                {visibleSlides.current.type === 'video' ? (
-                  <video
-                    src={visibleSlides.current.image}
-                    className="w-full h-full object-cover rounded-2xl"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  />
+                {visibleSlides.current.type === 'message' ? (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold text-gray-800 mb-4">Video Portfolio on Instagram</h3>
+                      <p className="text-gray-600 mb-6">Check out our latest video edits and creative content!</p>
+                      <a 
+                        href="https://instagram.com/macflix_bhautik" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:shadow-lg transition-all duration-300"
+                      >
+                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        Follow Us
+                      </a>
+                    </div>
+                  </div>
                 ) : (
                   <img
                     src={visibleSlides.current.image}
@@ -618,78 +604,27 @@ export default function Portfolio() {
                   </button>
                   
                   {modalProject.viewType === 'view' ? (
-                    /* View Mode - Large Image/Video */
+                    /* View Mode - Large Image/Message */
                     <div className="relative">
-                      {modalProject.type === 'video' ? (
-                        <div className="flex flex-col md:flex-row h-[80vh] max-h-[800px]">
-                          {/* Video Section with 9:16 aspect ratio */}
-                          <div className="md:w-1/2 relative flex items-center justify-center p-4 bg-black/90">
-                            <div className="h-full aspect-[9/16] relative max-h-full">
-                              <video
-                                src={modalProject.image}
-                                className="w-full h-full object-contain rounded-xl"
-                                autoPlay
-                                loop
-                                playsInline
-                                controls
-                                id="modalVideo"
-                              />
-                            </div>
-                            {/* Sound Control */}
-                            <button
-                              onClick={() => {
-                                const video = document.getElementById('modalVideo');
-                                if (video) {
-                                  video.muted = !video.muted;
-                                }
-                              }}
-                              className="absolute bottom-8 right-8 p-3 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors shadow-lg z-10"
+                      {modalProject.type === 'message' ? (
+                        <div className="flex flex-col items-center justify-center p-16 bg-gradient-to-br from-purple-50 to-pink-50 min-h-[60vh]">
+                          <div className="text-center max-w-2xl">
+                            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Check Out Our Video Portfolio</h3>
+                            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                              We showcase our best video edits, motion graphics, and creative content on Instagram. 
+                              Follow us to stay updated with our latest work!
+                            </p>
+                            <a 
+                              href="https://instagram.com/macflix_bhautik" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
                             >
-                              {document.getElementById('modalVideo')?.muted ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/>
-                                </svg>
-                              ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-                                </svg>
-                              )}
-                            </button>
-                          </div>
-                          {/* Details Section */}
-                          <div className="md:w-1/2 p-8 bg-white overflow-y-auto">
-                            <div className="max-w-lg mx-auto">
-                              <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">{modalProject.title}</h3>
-                              <div className="flex items-center space-x-4 text-gray-600 mb-6">
-                                <div className="flex items-center space-x-2">
-                                  <User size={18} />
-                                  <span>{modalProject.client}</span>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                  <Calendar size={18} />
-                                  <span>{modalProject.completionDate}</span>
-                                </div>
-                              </div>
-                              <div className="space-y-6">
-                                <div>
-                                  <h4 className="text-lg font-semibold text-gray-800 mb-2">Description</h4>
-                                  <p className="text-gray-600 leading-relaxed">{modalProject.description}</p>
-                                </div>
-                                <div>
-                                  <h4 className="text-lg font-semibold text-gray-800 mb-3">Key Features</h4>
-                                  <ul className="space-y-2">
-                                    {modalProject.features?.map((feature, index) => (
-                                      <li key={index} className="flex items-center space-x-2">
-                                        <div className="w-2 h-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></div>
-                                        <span className="text-gray-600">{feature}</span>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
+                              <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                              </svg>
+                              Follow @macflix_bhautik
+                            </a>
                           </div>
                         </div>
                       ) : (
