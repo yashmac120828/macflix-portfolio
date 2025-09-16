@@ -1,15 +1,25 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, ExternalLink, Eye, Play, X, Calendar, User, Palette } from 'lucide-react'
-import FrontSideCard from "../assets/Frontside Card Design.png"
-import FrontSideCard2 from "../assets/FrontSide.jpg"
-import cardb from "../assets/Red & Black Design Card.jpg"
-import B1 from "../assets/B1.png"
-import B2 from "../assets/B2.png"
-import BH1 from "../assets/Birthday Invi-1.png"
-import BH2 from "../assets/Birthday Invi-2.png"
-import MHAP from "../assets/Mahek Auto Point.png"
-import MHFM from "../assets/Maharaja Food Menu.png"
+
+import { getCloudinaryUrl } from '../utils/cloudinary';
+// Cloudinary URLs for optimized images
+// Visiting Cards
+const FrontSideCard = "Frontside_Card_Design_d7z4h4";
+const FrontSideCard2 = "FrontSide_nbt8qf";
+const cardb = "Red_Black_Design_Card_mgmag8";
+
+// Invitation Cards
+const BH1 = "Birthday_Invi-1_kdi3go";
+const BH2 = "Birthday_Invi-1_kdi3go"; // Using the same invitation image
+
+// Banner Designs
+const B1 = "B1_oqo46l";
+const B2 = "B2_xyngpe";
+const BLOOD_DONATION = "BLOOD_DONATION_CAMP_wh4hw3";
+// We'll remove these as we don't have their Cloudinary IDs yet
+// const MHAP = "v1/macflix-portfolio/Mahek_Auto_Point";
+// const MHFM = "v1/macflix-portfolio/Maharaja_Food_Menu";
 
 
 export default function Portfolio() {
@@ -126,7 +136,7 @@ export default function Portfolio() {
         { 
           id: 9, 
           title: "Fine Dining Menu", 
-          image: MHFM, 
+          image: '', 
           client: "Maharaja Foods",
           description: "Elegant fine dining menu with sophisticated typography and premium feel.",
           features: ["Premium paper", "Gold accents", "Fine typography", "Food photography"],
@@ -369,9 +379,10 @@ export default function Portfolio() {
                   />
                 ) : (
                   <img
-                    src={visibleSlides.prev.image}
+                    src={getCloudinaryUrl(visibleSlides.prev.image)}
                     alt={visibleSlides.prev.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -421,9 +432,33 @@ export default function Portfolio() {
                   </div>
                 ) : (
                   <img
-                    src={visibleSlides.current.image}
+                    src={getCloudinaryUrl(visibleSlides.current.image)}
                     alt={visibleSlides.current.title}
                     className="w-full h-full object-cover rounded-2xl"
+                    loading="lazy"
+                    onError={(e) => {
+                      console.error('❌ Image failed to load:', {
+                        src: e.target.src,
+                        publicId: visibleSlides.current.image,
+                        title: visibleSlides.current.title
+                      });
+                      e.target.onerror = null; // Prevent infinite loop
+                      // More visible error placeholder
+                      e.target.src = `data:image/svg+xml;base64,${btoa(`
+                        <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="200" height="200" fill="#fde2e2"/>
+                          <text x="50%" y="45%" font-family="Arial" font-size="14" fill="#ef4444" text-anchor="middle">Image Load Error</text>
+                          <text x="50%" y="55%" font-family="Arial" font-size="12" fill="#ef4444" text-anchor="middle">${visibleSlides.current.title}</text>
+                        </svg>
+                      `)}`;
+                    }}
+                    onLoad={(e) => {
+                      console.log('✅ Image loaded successfully:', {
+                        src: e.target.src,
+                        title: visibleSlides.current.title,
+                        naturalSize: `${e.target.naturalWidth}x${e.target.naturalHeight}`
+                      });
+                    }}
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-2xl"></div>
@@ -481,9 +516,10 @@ export default function Portfolio() {
                   />
                 ) : (
                   <img
-                    src={visibleSlides.next.image}
+                    src={getCloudinaryUrl(visibleSlides.next.image)}
                     alt={visibleSlides.next.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -630,9 +666,10 @@ export default function Portfolio() {
                       ) : (
                         <>
                           <img
-                            src={modalProject.image}
+                            src={getCloudinaryUrl(modalProject.image)}
                             alt={modalProject.title}
                             className="w-full h-96 md:h-[500px] object-cover rounded-t-3xl"
+                            loading="lazy"
                           />
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8 text-white rounded-t-3xl">
                             <h3 className="text-2xl md:text-3xl font-bold mb-2">{modalProject.title}</h3>
@@ -658,9 +695,10 @@ export default function Portfolio() {
                             />
                           ) : (
                             <img
-                              src={modalProject.image}
+                              src={getCloudinaryUrl(modalProject.image)}
                               alt={modalProject.title}
                               className="w-full h-64 md:h-80 object-cover rounded-2xl shadow-lg"
+                              loading="lazy"
                             />
                           )}
                         </div>
