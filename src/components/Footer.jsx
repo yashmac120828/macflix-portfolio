@@ -1,10 +1,27 @@
+import { useState, useEffect } from 'react'
 import { MessageCircle, Instagram, Mail, Zap, ArrowUpRight } from 'lucide-react'
 import Logo from './Logo'
 import { motion } from 'framer-motion'
+import { FooterShimmer } from './ShimmerLoader'
 
 export default function Footer() {
+  const [isLoading, setIsLoading] = useState(true)
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Simulate footer loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000) // 1 second loading simulation
+    
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (isLoading) {
+    return <FooterShimmer />
   }
 
   return (

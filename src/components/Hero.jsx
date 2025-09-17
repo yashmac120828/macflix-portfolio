@@ -1,11 +1,27 @@
+import { useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Play, Users, Award, Clock } from 'lucide-react'
 import Logo from './Logo'
+import { HeroShimmer } from './ShimmerLoader'
 
 export default function Hero() {
+  const [isLoading, setIsLoading] = useState(true)
   const { scrollY } = useScroll()
   const y1 = useTransform(scrollY, [0, 300], [0, -50])
   const y2 = useTransform(scrollY, [0, 300], [0, -100])
+
+  // Simulate initial loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1800) // 1.8 seconds loading simulation
+    
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (isLoading) {
+    return <HeroShimmer />
+  }
 
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-macflix-gradient py-16 sm:py-20" id="home">

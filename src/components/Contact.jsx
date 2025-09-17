@@ -11,11 +11,22 @@ import {
   QrCode,
   Eye
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import logo from "../assets/logo.png"
+import { ContactSectionShimmer } from './ShimmerLoader'
 
 export default function Contact() {
   const [qrOverlay, setQrOverlay] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Simulate contact loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1200) // 1.2 seconds loading simulation
+    
+    return () => clearTimeout(timer)
+  }, [])
 
   const generateQRCode = (data, size = 200) => {
     // Simple QR code pattern generator (placeholder)
@@ -155,6 +166,10 @@ export default function Contact() {
 
   const closeQROverlay = () => {
     setQrOverlay(null)
+  }
+
+  if (isLoading) {
+    return <ContactSectionShimmer />
   }
 
   return (

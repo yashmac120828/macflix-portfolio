@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Logo from './Logo'
+import { NavShimmer } from './ShimmerLoader'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,7 +17,20 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Simulate navigation loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 800) // 0.8 seconds loading simulation
+    
+    return () => clearTimeout(timer)
+  }, [])
+
   const navItems = ['Home', 'Services', 'Portfolio','Testimonials', 'Contact']
+
+  if (isLoading) {
+    return <NavShimmer />
+  }
 
   return (
     <motion.nav 

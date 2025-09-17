@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import React, { Component } from 'react';
 import logo from '../assets/logo.png';
+import { ServiceCardShimmer } from './ShimmerLoader'
 
 import { 
   PenTool, 
@@ -17,6 +19,17 @@ import {
 } from 'lucide-react'
 
 export default function Services() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Simulate loading for services
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000) // 2 seconds loading simulation
+    
+    return () => clearTimeout(timer)
+  }, [])
+
   const services = [
     { 
       icon: <PenTool size={40} />, 
@@ -197,7 +210,13 @@ export default function Services() {
 
         {/* Responsive Grid for Mobile and Tablet */}
         <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-8">
-          {services.map((service, index) => (
+          {isLoading ? (
+            // Show shimmer loading cards
+            [...Array(8)].map((_, index) => (
+              <ServiceCardShimmer key={`shimmer-${index}`} />
+            ))
+          ) : (
+            services.map((service, index) => (
             <motion.div
               key={index}
               className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden"
@@ -230,7 +249,8 @@ export default function Services() {
 
              
             </motion.div>
-          ))}
+            ))
+          )}
         </div>
 
         

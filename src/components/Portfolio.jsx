@@ -2,6 +2,7 @@ import { useState, useEffect , useRef} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, ChevronLeft, ChevronRight, Volume2, VolumeX, Maximize } from 'lucide-react'
 import { getCloudinaryUrl } from '../utils/cloudinary'
+import { VideoShimmer, ImageShimmer, ProjectDetailsShimmer } from './ShimmerLoader'
 
 // Add no-scrollbar styles to a style tag
 const style = document.createElement('style')
@@ -39,12 +40,20 @@ export default function Portfolio() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [fullscreenVideo, setFullscreenVideo] = useState(null)
+  const [isContentLoading, setIsContentLoading] = useState(true)
+  const [isImageLoading, setIsImageLoading] = useState({})
+  const [isVideoLoading, setIsVideoLoading] = useState({})
   const videoRef = useRef(null)
   const fullscreenVideoRef = useRef(null)
 
   
   // Category-specific configurations for aspect ratios and sizing
   const categoryConfigs = {
+     'Video Editing': {
+      aspectRatio: 'aspect-square', // Square container
+      height: 'h-[500px]',
+      objectFit: 'object-cover'
+    },
     'Visiting Cards': {
       aspectRatio: 'aspect-[3.5/2]', // Standard business card ratio
       height: 'h-[400px]',
@@ -65,11 +74,7 @@ export default function Portfolio() {
       height: 'h-[600px]',
       objectFit: 'object-contain'
     },
-    'Video Editing': {
-      aspectRatio: 'aspect-square', // Square container
-      height: 'h-[500px]',
-      objectFit: 'object-cover'
-    },
+   
     'Food Menu Design': {
       aspectRatio: 'aspect-[3/4]', // Menu card ratio
       height: 'h-[600px]',
@@ -79,6 +84,46 @@ export default function Portfolio() {
 
   // Portfolio categories with projects
   const categories = [
+    {
+      name: "Video Editing",
+      description: "Professional video editing and motion graphics",
+      projects: [
+        {
+          id: 9,
+          title: "Creative Motion Edit",
+          image: VID1,
+          client: "MACFLIX",
+          description: "Dynamic motion graphics and creative video editing showcase.",
+          features: ["Motion Graphics", "Creative Transitions", "Visual Effects", "Color Grading"],
+          completionDate: "2024-03-01",
+          projectType: "Video Edit",
+          type: "video",
+          startTime: 15 // Start from 15 seconds where the best scenes begin
+        },
+        {
+          id: 10,
+          title: "Cinematic Edit",
+          image: VID2,
+          client: "MACFLIX",
+          description: "Cinematic style video editing with smooth transitions.",
+          features: ["Cinematic Effects", "Smooth Transitions", "Professional Audio", "Color Grading"],
+          completionDate: "2024-03-15",
+          projectType: "Video Edit",
+          type: "video"
+        },
+        {
+          id: 11,
+          title: "Social Media Reel",
+          image: VID3,
+          client: "MACFLIX",
+          description: "Engaging social media reel with trendy effects.",
+          features: ["Trendy Effects", "Dynamic Transitions", "Music Sync", "Social Optimization"],
+          completionDate: "2024-03-20",
+          projectType: "Social Media",
+          type: "video"
+        }
+      ]
+    },
     {
       name: "Visiting Cards",
       description: "Professional business card designs with modern layouts",
@@ -192,46 +237,6 @@ export default function Portfolio() {
       ]
     },
     {
-      name: "Video Editing",
-      description: "Professional video editing and motion graphics",
-      projects: [
-        {
-          id: 9,
-          title: "Creative Motion Edit",
-          image: VID1,
-          client: "MACFLIX",
-          description: "Dynamic motion graphics and creative video editing showcase.",
-          features: ["Motion Graphics", "Creative Transitions", "Visual Effects", "Color Grading"],
-          completionDate: "2024-03-01",
-          projectType: "Video Edit",
-          type: "video",
-          startTime: 15 // Start from 15 seconds where the best scenes begin
-        },
-        {
-          id: 10,
-          title: "Cinematic Edit",
-          image: VID2,
-          client: "MACFLIX",
-          description: "Cinematic style video editing with smooth transitions.",
-          features: ["Cinematic Effects", "Smooth Transitions", "Professional Audio", "Color Grading"],
-          completionDate: "2024-03-15",
-          projectType: "Video Edit",
-          type: "video"
-        },
-        {
-          id: 11,
-          title: "Social Media Reel",
-          image: VID3,
-          client: "MACFLIX",
-          description: "Engaging social media reel with trendy effects.",
-          features: ["Trendy Effects", "Dynamic Transitions", "Music Sync", "Social Optimization"],
-          completionDate: "2024-03-20",
-          projectType: "Social Media",
-          type: "video"
-        }
-      ]
-    },
-    {
       name: "Food Menu Design",
       description: "Creative and appetizing menu designs for restaurants",
       projects: [
@@ -269,6 +274,34 @@ export default function Portfolio() {
   useEffect(() => {
     setCurrentSlide(0)
   }, [activeCategory])
+
+  // Simulate initial content loading
+  useEffect(() => {
+    setIsContentLoading(true)
+    const timer = setTimeout(() => {
+      setIsContentLoading(false)
+    }, 1500) // 1.5 seconds loading simulation
+    
+    return () => clearTimeout(timer)
+  }, [activeCategory, currentSlide])
+
+  // Handle image loading
+  const handleImageLoad = (projectId) => {
+    setIsImageLoading(prev => ({ ...prev, [projectId]: false }))
+  }
+
+  const handleImageStart = (projectId) => {
+    setIsImageLoading(prev => ({ ...prev, [projectId]: true }))
+  }
+
+  // Handle video loading
+  const handleVideoLoad = (projectId) => {
+    setIsVideoLoading(prev => ({ ...prev, [projectId]: false }))
+  }
+
+  const handleVideoStart = (projectId) => {
+    setIsVideoLoading(prev => ({ ...prev, [projectId]: true }))
+  }
 
   // Handle video autoplay when project changes
   useEffect(() => {
@@ -407,17 +440,54 @@ export default function Portfolio() {
           {/* Content Display - Full width on mobile */}
           <div className="w-full md:w-1/2 flex items-center justify-center">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={`${activeCategory}-${currentSlide}`}
-                className={`relative rounded-2xl overflow-hidden shadow-2xl bg-black/20 backdrop-blur-sm ${categoryConfigs[currentCategory.name].height} ${
-                  categoryConfigs[currentCategory.name].aspectRatio
-                }`}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
-                transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-              >
-                {currentProject.type === 'video' ? (
+              {isContentLoading ? (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  {currentProject.type === 'video' ? (
+                    <VideoShimmer 
+                      aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
+                      height={categoryConfigs[currentCategory.name].height}
+                    />
+                  ) : (
+                    <ImageShimmer 
+                      aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
+                      height={categoryConfigs[currentCategory.name].height}
+                    />
+                  )}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={`${activeCategory}-${currentSlide}`}
+                  className={`relative rounded-2xl overflow-hidden shadow-2xl bg-black/20 backdrop-blur-sm ${categoryConfigs[currentCategory.name].height} ${
+                    categoryConfigs[currentCategory.name].aspectRatio
+                  }`}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+                >
+                  {/* Loading overlay for individual content */}
+                  {(isVideoLoading[currentProject.id] || isImageLoading[currentProject.id]) && (
+                    <div className="absolute inset-0 z-10">
+                      {currentProject.type === 'video' ? (
+                        <VideoShimmer 
+                          aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
+                          height="h-full"
+                        />
+                      ) : (
+                        <ImageShimmer 
+                          aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
+                          height="h-full"
+                        />
+                      )}
+                    </div>
+                  )}
+                  
+                  {currentProject.type === 'video' ? (
                   <div 
                     className="relative w-full h-full bg-gradient-to-br from-red-900/30 via-black/50 to-purple-900/30 rounded-xl overflow-hidden cursor-pointer group flex items-center justify-center"
                     onClick={() => {
@@ -435,6 +505,8 @@ export default function Portfolio() {
                         muted={true}
                         playsInline
                         ref={videoRef}
+                        onLoadStart={() => handleVideoStart(currentProject.id)}
+                        onLoadedData={() => handleVideoLoad(currentProject.id)}
                         onLoadedMetadata={() => {
                           // Set start time when metadata is loaded
                           console.log('Video metadata loaded, setting start time:', currentProject.startTime);
@@ -442,6 +514,7 @@ export default function Portfolio() {
                             videoRef.current.currentTime = currentProject.startTime;
                             console.log('Set video time to:', videoRef.current.currentTime);
                           }
+                          handleVideoLoad(currentProject.id)
                         }}
                         onSeeked={() => {
                           // Video has finished seeking to the new time
@@ -469,31 +542,41 @@ export default function Portfolio() {
                     <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-purple-600/10 pointer-events-none"></div>
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.3)_100%)] pointer-events-none"></div>
                   </div>
-                ) : (
-                  <img
-                    src={getCloudinaryUrl(currentProject.image)}
-                    alt={currentProject.title}
-                    className={`w-full h-full ${categoryConfigs[currentCategory.name].objectFit}`}
-                  />
-                )}
-                
-                
-               
-              </motion.div>
+                  ) : (
+                    <img
+                      src={getCloudinaryUrl(currentProject.image)}
+                      alt={currentProject.title}
+                      className={`w-full h-full ${categoryConfigs[currentCategory.name].objectFit}`}
+                      onLoad={() => handleImageLoad(currentProject.id)}
+                      onLoadStart={() => handleImageStart(currentProject.id)}
+                    />
+                  )}
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
 
           {/* Project Details - Full width on mobile */}
           <div className="w-full md:w-1/2 h-full text-white flex flex-col justify-center px-2 md:px-0">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={`${activeCategory}-${currentSlide}-details`}
-                initial={{ opacity: 0, y: 20, x: 0 }}
-                animate={{ opacity: 1, y: 0, x: 0 }}
-                exit={{ opacity: 0, y: -20, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-3 md:space-y-4"
-              >
+              {isContentLoading ? (
+                <motion.div
+                  key="details-loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <ProjectDetailsShimmer />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={`${activeCategory}-${currentSlide}-details`}
+                  initial={{ opacity: 0, y: 20, x: 0 }}
+                  animate={{ opacity: 1, y: 0, x: 0 }}
+                  exit={{ opacity: 0, y: -20, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="space-y-3 md:space-y-4"
+                >
                 {/* Category Badge */}
                 <motion.span
                   className="inline-block px-4 py-2 bg-red-600 text-white rounded-full text-sm font-medium"
@@ -572,7 +655,8 @@ export default function Portfolio() {
                     Get Similar Design
                   </a>
                 </motion.div>
-              </motion.div>
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
         </div>

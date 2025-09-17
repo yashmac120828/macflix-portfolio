@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Quote, User, Shield, CheckCircle, RefreshCw, ExternalLink } from 'lucide-react';
+import { TestimonialShimmer } from './ShimmerLoader';
 
 const Testimonials = () => {
   const GOOGLE_SHEETS_CONFIG = {
@@ -164,7 +165,13 @@ const Testimonials = () => {
           </div>
           
           {/* Testimonials Grid */}
-          {testimonials.length > 0 ? (
+          {isLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {[...Array(6)].map((_, index) => (
+                <TestimonialShimmer key={`shimmer-${index}`} />
+              ))}
+            </div>
+          ) : testimonials.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {testimonials.map((testimonial) => (
                 <div
