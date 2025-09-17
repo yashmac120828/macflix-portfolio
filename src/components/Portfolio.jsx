@@ -38,19 +38,11 @@ export default function Portfolio() {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
+  const [fullscreenVideo, setFullscreenVideo] = useState(null)
   const videoRef = useRef(null)
+  const fullscreenVideoRef = useRef(null)
 
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause()
-      } else {
-        videoRef.current.play()
-      }
-      setIsPlaying(!isPlaying)
-    }
-  }
-
+  
   // Category-specific configurations for aspect ratios and sizing
   const categoryConfigs = {
     'Visiting Cards': {
@@ -74,8 +66,8 @@ export default function Portfolio() {
       objectFit: 'object-contain'
     },
     'Video Editing': {
-      aspectRatio: 'aspect-[9/16]', // Vertical video ratio
-      height: 'h-[600px]',
+      aspectRatio: 'aspect-square', // Square container
+      height: 'h-[500px]',
       objectFit: 'object-cover'
     },
     'Food Menu Design': {
@@ -212,7 +204,8 @@ export default function Portfolio() {
           features: ["Motion Graphics", "Creative Transitions", "Visual Effects", "Color Grading"],
           completionDate: "2024-03-01",
           projectType: "Video Edit",
-          type: "video"
+          type: "video",
+          startTime: 15 // Start from 15 seconds where the best scenes begin
         },
         {
           id: 10,
@@ -263,19 +256,84 @@ export default function Portfolio() {
 
   // Auto-play functionality
   useEffect(() => {
-    if (!isAutoPlay) return
+    if (!isAutoPlay || isFullscreen) return
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % totalSlides)
     }, 4000)
 
     return () => clearInterval(interval)
-  }, [isAutoPlay, totalSlides])
+  }, [isAutoPlay, totalSlides, isFullscreen])
 
   // Reset slide when category changes
   useEffect(() => {
     setCurrentSlide(0)
   }, [activeCategory])
+
+  // Handle video autoplay when project changes
+  useEffect(() => {
+    if (currentProject.type === 'video' && videoRef.current) {
+      const video = videoRef.current;
+      const startTime = currentProject.startTime || 0;
+      
+      console.log('Project changed to video:', currentProject.title, 'Start time:', startTime);
+      
+      const handleLoadedMetadata = () => {
+        console.log('Metadata loaded in useEffect, setting time to:', startTime);
+        video.currentTime = startTime;
+        
+        // Verify after seeking
+        const handleSeeked = () => {
+          console.log('Video seeked to:', video.currentTime);
+          video.removeEventListener('seeked', handleSeeked);
+        };
+        video.addEventListener('seeked', handleSeeked);
+      };
+      
+      if (video.readyState >= 1) {
+        // Metadata already loaded
+        console.log('Metadata already loaded, setting time immediately');
+        video.currentTime = startTime;
+      } else {
+        // Wait for metadata to load
+        video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      }
+      
+      // Try to play the video
+      video.play().catch((error) => {
+        console.log('Autoplay failed:', error);
+      });
+      
+      // Cleanup
+      return () => {
+        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      };
+    }
+  }, [currentProject])
+
+  // Handle fullscreen video state
+  useEffect(() => {
+    if (isFullscreen && fullscreenVideo && fullscreenVideoRef.current) {
+      setIsPlaying(true);
+      
+      // Set start time if specified
+      const startTime = fullscreenVideo.startTime || 0;
+      fullscreenVideoRef.current.currentTime = startTime;
+      
+      fullscreenVideoRef.current.play().then(() => {
+        // Video started playing, double-check start time
+        setTimeout(() => {
+          if (fullscreenVideoRef.current && Math.abs(fullscreenVideoRef.current.currentTime - startTime) > 1) {
+            fullscreenVideoRef.current.currentTime = startTime;
+          }
+        }, 200);
+      }).catch(() => {
+        // Autoplay failed
+      });
+    } else {
+      setIsPlaying(false);
+    }
+  }, [isFullscreen, fullscreenVideo])
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides)
@@ -360,45 +418,56 @@ export default function Portfolio() {
                 transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
               >
                 {currentProject.type === 'video' ? (
-                  <div className="relative w-full h-[500px] md:h-[600px] bg-black/90 rounded-xl p-3 md:p-6 flex items-center justify-center">
-                    {/* Video Container with Red Border */}
-                    <div className="relative w-[280px] md:w-[337px] h-[500px] md:h-[600px] bg-gradient-to-b from-red-600/20 to-black/20 rounded-lg overflow-hidden border-2 border-red-600/30">
+                  <div 
+                    className="relative w-full h-full bg-gradient-to-br from-red-900/30 via-black/50 to-purple-900/30 rounded-xl overflow-hidden cursor-pointer group flex items-center justify-center"
+                    onClick={() => {
+                      setFullscreenVideo(currentProject);
+                      setIsFullscreen(true);
+                    }}
+                  >
+                    {/* Video Container - 9:16 aspect ratio centered */}
+                    <div className="relative aspect-[9/16] h-[85%] bg-black rounded-lg overflow-hidden shadow-2xl">
                       <video
                         src={getCloudinaryUrl(currentProject.image, 'video')}
                         className="w-full h-full object-cover"
+                        autoPlay
                         loop
                         muted={true}
                         playsInline
                         ref={videoRef}
+                        onLoadedMetadata={() => {
+                          // Set start time when metadata is loaded
+                          console.log('Video metadata loaded, setting start time:', currentProject.startTime);
+                          if (videoRef.current && currentProject.startTime) {
+                            videoRef.current.currentTime = currentProject.startTime;
+                            console.log('Set video time to:', videoRef.current.currentTime);
+                          }
+                        }}
+                        onSeeked={() => {
+                          // Video has finished seeking to the new time
+                          console.log('Video seeked to:', videoRef.current?.currentTime);
+                        }}
+                        onPlay={() => {
+                          // Ensure start time is correct when video starts playing
+                          if (videoRef.current && currentProject.startTime && 
+                              Math.abs(videoRef.current.currentTime - currentProject.startTime) > 1) {
+                            console.log('Correcting video time on play');
+                            videoRef.current.currentTime = currentProject.startTime;
+                          }
+                        }}
                       />
-                      {/* Video Controls Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-                        {/* Play/Pause Button */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <motion.button
-                            onClick={() => handlePlayPause()}
-                            className="w-16 h-16 bg-red-600/90 hover:bg-red-600 rounded-full flex items-center justify-center"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            {isPlaying ? (
-                              <Pause size={24} className="text-white" />
-                            ) : (
-                              <Play size={24} className="text-white ml-1" />
-                            )}
-                          </motion.button>
+                      
+                      {/* Video Overlay with Play Button */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-center justify-center group-hover:bg-black/20 transition-all duration-300">
+                        <div className="bg-red-600/80 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                          <Maximize size={24} className="text-white" />
                         </div>
-                        {/* Fullscreen Button */}
-                        <motion.button
-                          onClick={() => setIsFullscreen(true)}
-                          className="absolute bottom-4 right-4 w-10 h-10 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Maximize size={18} className="text-white" />
-                        </motion.button>
                       </div>
                     </div>
+                    
+                    {/* Background Pattern/Texture */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-purple-600/10 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.3)_100%)] pointer-events-none"></div>
                   </div>
                 ) : (
                   <img
@@ -408,14 +477,8 @@ export default function Portfolio() {
                   />
                 )}
                 
-                {/* Play Icon for Videos */}
-                {currentProject.type === 'video' && (
-                  <div className="absolute top-4 right-4">
-                    <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-                      <Play size={20} className="text-white ml-1" />
-                    </div>
-                  </div>
-                )}
+                
+               
               </motion.div>
             </AnimatePresence>
           </div>
@@ -542,7 +605,7 @@ export default function Portfolio() {
 
           <button
             onClick={nextSlide}
-            className="p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all duration-300 group"
+            className="p-1.5 md:p-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all duration-300 group"
             onMouseEnter={() => setIsAutoPlay(false)}
             onMouseLeave={() => setIsAutoPlay(true)}
           >
@@ -575,7 +638,7 @@ export default function Portfolio() {
 
       {/* Fullscreen Video Overlay */}
       <AnimatePresence>
-        {isFullscreen && currentProject.type === 'video' && (
+        {isFullscreen && fullscreenVideo && fullscreenVideo.type === 'video' && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -586,25 +649,68 @@ export default function Portfolio() {
               {/* Video Container */}
               <div className="relative w-full h-full max-w-7xl mx-auto">
                 <video
-                  src={getCloudinaryUrl(currentProject.image, 'video')}
+                  ref={fullscreenVideoRef}
+                  src={getCloudinaryUrl(fullscreenVideo.image, 'video')}
                   className="w-full h-full object-contain"
                   autoPlay
                   loop
                   playsInline
                   muted={isMuted}
+                  onLoadedMetadata={() => {
+                    // Set start time when metadata is loaded
+                    console.log('Fullscreen video metadata loaded, setting start time:', fullscreenVideo.startTime);
+                    if (fullscreenVideoRef.current && fullscreenVideo.startTime) {
+                      fullscreenVideoRef.current.currentTime = fullscreenVideo.startTime;
+                      console.log('Set fullscreen video time to:', fullscreenVideoRef.current.currentTime);
+                    }
+                  }}
+                  onPlay={() => {
+                    // Ensure start time is correct when video starts playing
+                    if (fullscreenVideoRef.current && fullscreenVideo.startTime && 
+                        Math.abs(fullscreenVideoRef.current.currentTime - fullscreenVideo.startTime) > 1) {
+                      console.log('Correcting fullscreen video time on play');
+                      fullscreenVideoRef.current.currentTime = fullscreenVideo.startTime;
+                    }
+                  }}
                 />
                 
                 {/* Overlay Controls */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black via-black/50 to-transparent">
                   <div className="flex items-center justify-between">
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-white">{currentProject.title}</h3>
+                    <h3 className="text-xl font-bold text-white">{fullscreenVideo.title}</h3>
                     
                     {/* Controls */}
                     <div className="flex items-center gap-4">
+                      {/* Play/Pause Button */}
+                      <button
+                        onClick={() => {
+                          if (fullscreenVideoRef.current) {
+                            if (isPlaying) {
+                              fullscreenVideoRef.current.pause();
+                            } else {
+                              fullscreenVideoRef.current.play();
+                            }
+                            setIsPlaying(!isPlaying);
+                          }
+                        }}
+                        className="w-12 h-12 bg-red-600/80 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300"
+                      >
+                        {isPlaying ? (
+                          <Pause size={20} className="text-white" />
+                        ) : (
+                          <Play size={20} className="text-white" />
+                        )}
+                      </button>
+                      
                       {/* Mute/Unmute Button */}
                       <button
-                        onClick={() => setIsMuted(!isMuted)}
+                        onClick={() => {
+                          setIsMuted(!isMuted);
+                          if (fullscreenVideoRef.current) {
+                            fullscreenVideoRef.current.muted = !isMuted;
+                          }
+                        }}
                         className="w-12 h-12 bg-red-600/80 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300"
                       >
                         {isMuted ? (
@@ -623,6 +729,7 @@ export default function Portfolio() {
                 onClick={() => {
                   setIsFullscreen(false);
                   setIsPlaying(false);
+                  setFullscreenVideo(null);
                 }}
                 className="absolute top-6 right-6 w-12 h-12 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg"
               >
