@@ -5,7 +5,7 @@ import logo from '../assets/logo.png';
 import { ServiceCardShimmer } from './ShimmerLoader'
 
 import { 
-  PenTool, 
+  
   Video, 
   Image, 
   Camera, 
@@ -31,12 +31,7 @@ export default function Services() {
   }, [])
 
   const services = [
-    { 
-      icon: <PenTool size={40} />, 
-      title: "Logo Design", 
-      description: "Professional brand identity design that makes your business memorable",
-      color: "from-purple-600 to-pink-600"
-    },
+    
     { 
       icon: <Image size={40} />, 
       title: "Banner Designing", 

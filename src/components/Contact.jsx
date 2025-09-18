@@ -385,7 +385,7 @@ export default function Contact() {
         >
           <h3 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6">Start Your Project Today</h3>
           <p className="text-base sm:text-xl mb-6 sm:mb-8 text-white/90 max-w-2xl mx-auto">
-            Join hundreds of satisfied clients who have transformed their brands with MacFlix. 
+            Join 50+ satisfied clients who have transformed their brands with MacFlix. 
             Your creative journey starts with a simple message.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center">

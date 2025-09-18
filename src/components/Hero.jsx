@@ -162,7 +162,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.7 }}
         >
           Transform your vision into stunning visuals with our professional design and video editing services. 
-          From logos to Instagram reels, we craft content that captivates and converts.
+          From designs to Instagram reels, we craft content that captivates and converts.
         </motion.p>
 
         <motion.div

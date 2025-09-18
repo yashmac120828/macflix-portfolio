@@ -256,8 +256,8 @@ export default function Portfolio() {
   ]
 
   const currentCategory = categories[activeCategory]
-  const currentProject = currentCategory.projects[currentSlide]
-  const totalSlides = currentCategory.projects.length
+  const currentProject = currentCategory?.projects?.[currentSlide]
+  const totalSlides = currentCategory?.projects?.length || 0
 
   // Auto-play functionality
   useEffect(() => {
@@ -305,31 +305,45 @@ export default function Portfolio() {
 
   // Handle video autoplay when project changes
   useEffect(() => {
-    if (currentProject.type === 'video' && videoRef.current) {
+    if (currentProject?.type === 'video' && videoRef.current) {
       const video = videoRef.current;
       const startTime = currentProject.startTime || 0;
       
       console.log('Project changed to video:', currentProject.title, 'Start time:', startTime);
       
+      const setVideoTime = () => {
+        if (video && !isNaN(video.duration)) {
+          video.currentTime = startTime;
+          console.log('Set video time to:', startTime, 'actual:', video.currentTime);
+          
+          // Double-check after a short delay
+          setTimeout(() => {
+            if (video && Math.abs(video.currentTime - startTime) > 0.5) {
+              video.currentTime = startTime;
+              console.log('Corrected video time to:', startTime);
+            }
+          }, 100);
+        }
+      };
+      
       const handleLoadedMetadata = () => {
-        console.log('Metadata loaded in useEffect, setting time to:', startTime);
-        video.currentTime = startTime;
-        
-        // Verify after seeking
-        const handleSeeked = () => {
-          console.log('Video seeked to:', video.currentTime);
-          video.removeEventListener('seeked', handleSeeked);
-        };
-        video.addEventListener('seeked', handleSeeked);
+        console.log('Metadata loaded in useEffect');
+        setVideoTime();
+      };
+      
+      const handleCanPlay = () => {
+        console.log('Video can play, setting time');
+        setVideoTime();
       };
       
       if (video.readyState >= 1) {
         // Metadata already loaded
         console.log('Metadata already loaded, setting time immediately');
-        video.currentTime = startTime;
+        setVideoTime();
       } else {
         // Wait for metadata to load
         video.addEventListener('loadedmetadata', handleLoadedMetadata);
+        video.addEventListener('canplay', handleCanPlay);
       }
       
       // Try to play the video
@@ -340,6 +354,7 @@ export default function Portfolio() {
       // Cleanup
       return () => {
         video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        video.removeEventListener('canplay', handleCanPlay);
       };
     }
   }, [currentProject])
@@ -351,13 +366,25 @@ export default function Portfolio() {
       
       // Set start time if specified
       const startTime = fullscreenVideo.startTime || 0;
-      fullscreenVideoRef.current.currentTime = startTime;
+      const video = fullscreenVideoRef.current;
       
-      fullscreenVideoRef.current.play().then(() => {
+      const setFullscreenVideoTime = () => {
+        if (video && !isNaN(video.duration)) {
+          video.currentTime = startTime;
+          console.log('Set fullscreen video time to:', startTime);
+        }
+      };
+      
+      if (video.readyState >= 1) {
+        setFullscreenVideoTime();
+      }
+      
+      video.play().then(() => {
         // Video started playing, double-check start time
         setTimeout(() => {
-          if (fullscreenVideoRef.current && Math.abs(fullscreenVideoRef.current.currentTime - startTime) > 1) {
-            fullscreenVideoRef.current.currentTime = startTime;
+          if (video && Math.abs(video.currentTime - startTime) > 0.5) {
+            video.currentTime = startTime;
+            console.log('Corrected fullscreen video time to:', startTime);
           }
         }, 200);
       }).catch(() => {
@@ -440,22 +467,22 @@ export default function Portfolio() {
           {/* Content Display - Full width on mobile */}
           <div className="w-full md:w-1/2 flex items-center justify-center">
             <AnimatePresence mode="wait">
-              {isContentLoading ? (
+              {isContentLoading || !currentProject ? (
                 <motion.div
                   key="loading"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  {currentProject.type === 'video' ? (
+                  {currentProject?.type === 'video' ? (
                     <VideoShimmer 
-                      aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
-                      height={categoryConfigs[currentCategory.name].height}
+                      aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
+                      height={categoryConfigs[currentCategory.name]?.height || 'h-[400px]'}
                     />
                   ) : (
                     <ImageShimmer 
-                      aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
-                      height={categoryConfigs[currentCategory.name].height}
+                      aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
+                      height={categoryConfigs[currentCategory.name]?.height || 'h-[400px]'}
                     />
                   )}
                 </motion.div>
@@ -471,23 +498,23 @@ export default function Portfolio() {
                   transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
                 >
                   {/* Loading overlay for individual content */}
-                  {(isVideoLoading[currentProject.id] || isImageLoading[currentProject.id]) && (
+                  {currentProject && (isVideoLoading[currentProject.id] || isImageLoading[currentProject.id]) && (
                     <div className="absolute inset-0 z-10">
                       {currentProject.type === 'video' ? (
                         <VideoShimmer 
-                          aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
+                          aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
                           height="h-full"
                         />
                       ) : (
                         <ImageShimmer 
-                          aspectRatio={categoryConfigs[currentCategory.name].aspectRatio}
+                          aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
                           height="h-full"
                         />
                       )}
                     </div>
                   )}
                   
-                  {currentProject.type === 'video' ? (
+                  {currentProject?.type === 'video' ? (
                   <div 
                     className="relative w-full h-full bg-gradient-to-br from-red-900/30 via-black/50 to-purple-900/30 rounded-xl overflow-hidden cursor-pointer group flex items-center justify-center"
                     onClick={() => {
@@ -509,12 +536,22 @@ export default function Portfolio() {
                         onLoadedData={() => handleVideoLoad(currentProject.id)}
                         onLoadedMetadata={() => {
                           // Set start time when metadata is loaded
-                          console.log('Video metadata loaded, setting start time:', currentProject.startTime);
-                          if (videoRef.current && currentProject.startTime) {
+                          console.log('Video metadata loaded, setting start time:', currentProject?.startTime);
+                          if (videoRef.current && currentProject?.startTime && !isNaN(videoRef.current.duration)) {
                             videoRef.current.currentTime = currentProject.startTime;
-                            console.log('Set video time to:', videoRef.current.currentTime);
+                            console.log('Set video time to:', currentProject.startTime);
                           }
-                          handleVideoLoad(currentProject.id)
+                          handleVideoLoad(currentProject?.id)
+                        }}
+                        onCanPlay={() => {
+                          // Additional check when video can play
+                          if (videoRef.current && currentProject?.startTime && !isNaN(videoRef.current.duration)) {
+                            const timeDiff = Math.abs(videoRef.current.currentTime - currentProject.startTime);
+                            if (timeDiff > 0.5) {
+                              videoRef.current.currentTime = currentProject.startTime;
+                              console.log('Corrected video time on canPlay:', currentProject.startTime);
+                            }
+                          }
                         }}
                         onSeeked={() => {
                           // Video has finished seeking to the new time
@@ -522,8 +559,8 @@ export default function Portfolio() {
                         }}
                         onPlay={() => {
                           // Ensure start time is correct when video starts playing
-                          if (videoRef.current && currentProject.startTime && 
-                              Math.abs(videoRef.current.currentTime - currentProject.startTime) > 1) {
+                          if (videoRef.current && currentProject?.startTime && 
+                              Math.abs(videoRef.current.currentTime - currentProject.startTime) > 0.5) {
                             console.log('Correcting video time on play');
                             videoRef.current.currentTime = currentProject.startTime;
                           }
@@ -559,7 +596,7 @@ export default function Portfolio() {
           {/* Project Details - Full width on mobile */}
           <div className="w-full md:w-1/2 h-full text-white flex flex-col justify-center px-2 md:px-0">
             <AnimatePresence mode="wait">
-              {isContentLoading ? (
+              {isContentLoading || !currentProject ? (
                 <motion.div
                   key="details-loading"
                   initial={{ opacity: 0 }}
@@ -626,7 +663,7 @@ export default function Portfolio() {
                 >
                   <h4 className="text-lg font-semibold mb-3">Key Features:</h4>
                   <div className="flex flex-wrap gap-2">
-                    {currentProject.features.map((feature, index) => (
+                    {currentProject?.features?.map((feature, index) => (
                       <motion.span
                         key={feature}
                         className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm border border-white/20"
@@ -636,7 +673,7 @@ export default function Portfolio() {
                       >
                         {feature}
                       </motion.span>
-                    ))}
+                    )) || []}
                   </div>
                 </motion.div>
 
@@ -674,7 +711,7 @@ export default function Portfolio() {
 
           {/* Slide Indicators */}
           <div className="flex items-center gap-3">
-            {currentCategory.projects.map((_, index) => (
+            {currentCategory?.projects?.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
@@ -684,7 +721,7 @@ export default function Portfolio() {
                     : 'w-2 h-2 bg-white/30 hover:bg-white/50 rounded-full'
                 }`}
               />
-            ))}
+            )) || []}
           </div>
 
           <button

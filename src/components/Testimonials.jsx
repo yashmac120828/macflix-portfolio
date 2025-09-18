@@ -237,10 +237,7 @@ const Testimonials = () => {
                 <Shield className="w-4 h-4 mr-1 text-green-600" />
                 <span>All testimonials verified</span>
               </div>
-              <div className="flex items-center">
-                <CheckCircle className="w-4 h-4 mr-1 text-blue-600" />
-                <span>Auto-synced with Google Sheets</span>
-              </div>
+              
             </div>
           </div>
         </div>
