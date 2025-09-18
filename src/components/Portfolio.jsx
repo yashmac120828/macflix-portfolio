@@ -626,7 +626,7 @@ export default function Portfolio() {
 
                 {/* Project Title */}
                 <motion.h3
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight"
+                  className="text-4xl font-bold leading-tight"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.3 }}
@@ -636,7 +636,7 @@ export default function Portfolio() {
 
                 {/* Project Description */}
                 <motion.p
-                  className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed"
+                  className="text-xl text-gray-300 leading-relaxed"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.4 }}
@@ -646,7 +646,7 @@ export default function Portfolio() {
 
                 {/* Client & Date Info */}
                 <motion.div
-                  className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-xs sm:text-sm md:text-base text-gray-400"
+                  className="flex items-center gap-6 text-gray-400"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -661,12 +661,12 @@ export default function Portfolio() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.6 }}
                 >
-                  <h4 className="text-sm sm:text-base md:text-lg font-semibold mb-2 md:mb-3">Key Features:</h4>
-                  <div className="flex flex-wrap gap-1.5 md:gap-2">
+                  <h4 className="text-lg font-semibold mb-3">Key Features:</h4>
+                  <div className="flex flex-wrap gap-2">
                     {currentProject?.features?.map((feature, index) => (
                       <motion.span
                         key={feature}
-                        className="px-2 sm:px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs sm:text-sm border border-white/20"
+                        className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm border border-white/20"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.7 + index * 0.1, type: "spring", stiffness: 200 }}
@@ -687,7 +687,7 @@ export default function Portfolio() {
                     href="https://wa.me/918780364562"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base"
+                    className="inline-block px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
                   >
                     Get Similar Design
                   </a>
@@ -764,16 +764,15 @@ export default function Portfolio() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black"
+            className="fixed inset-0 z-50 bg-black flex items-center justify-center"
           >
-            <div className="relative w-full h-full flex flex-col">
-              {/* Video Container - Mobile Responsive */}
-              <div className="flex-1 flex items-center justify-center p-2 md:p-4">
-                <div className="relative w-full h-full max-w-sm sm:max-w-md md:max-w-4xl lg:max-w-7xl mx-auto">
-                  <video
-                    ref={fullscreenVideoRef}
-                    src={getCloudinaryUrl(fullscreenVideo.image, 'video')}
-                    className="w-full h-full object-contain rounded-lg"
+            <div className="relative w-full h-full flex items-center justify-center">
+              {/* Video Container */}
+              <div className="relative w-full h-full max-w-7xl mx-auto">
+                <video
+                  ref={fullscreenVideoRef}
+                  src={getCloudinaryUrl(fullscreenVideo.image, 'video')}
+                  className="w-full h-full object-contain"
                   autoPlay
                   loop
                   playsInline
@@ -794,69 +793,68 @@ export default function Portfolio() {
                       fullscreenVideoRef.current.currentTime = fullscreenVideo.startTime;
                     }
                   }}
-                  />
-                </div>
-              </div>
+                />
                 
-              {/* Bottom Controls - Mobile Responsive */}
-              <div className="bg-black/90 backdrop-blur-sm p-3 md:p-6">
-                <div className="flex items-center justify-between max-w-sm sm:max-w-md md:max-w-4xl lg:max-w-7xl mx-auto">
-                  {/* Title */}
-                  <h3 className="text-sm sm:text-base md:text-xl font-bold text-white truncate mr-3 md:mr-4">{fullscreenVideo.title}</h3>
-                  
-                  {/* Controls */}
-                  <div className="flex items-center gap-2 md:gap-4">
-                    {/* Play/Pause Button */}
-                    <button
-                      onClick={() => {
-                        if (fullscreenVideoRef.current) {
-                          if (isPlaying) {
-                            fullscreenVideoRef.current.pause();
-                          } else {
-                            fullscreenVideoRef.current.play();
-                          }
-                          setIsPlaying(!isPlaying);
-                        }
-                      }}
-                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg"
-                    >
-                      {isPlaying ? (
-                        <Pause size={16} className="text-white sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                      ) : (
-                        <Play size={16} className="text-white sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                      )}
-                    </button>
+                {/* Overlay Controls */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black via-black/50 to-transparent">
+                  <div className="flex items-center justify-between">
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-white">{fullscreenVideo.title}</h3>
                     
-                    {/* Mute/Unmute Button */}
-                    <button
-                      onClick={() => {
-                        setIsMuted(!isMuted);
-                        if (fullscreenVideoRef.current) {
-                          fullscreenVideoRef.current.muted = !isMuted;
-                        }
-                      }}
-                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg"
-                    >
-                      {isMuted ? (
-                        <VolumeX size={16} className="text-white sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                      ) : (
-                        <Volume2 size={16} className="text-white sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                      )}
-                    </button>
+                    {/* Controls */}
+                    <div className="flex items-center gap-4">
+                      {/* Play/Pause Button */}
+                      <button
+                        onClick={() => {
+                          if (fullscreenVideoRef.current) {
+                            if (isPlaying) {
+                              fullscreenVideoRef.current.pause();
+                            } else {
+                              fullscreenVideoRef.current.play();
+                            }
+                            setIsPlaying(!isPlaying);
+                          }
+                        }}
+                        className="w-12 h-12 bg-red-600/80 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300"
+                      >
+                        {isPlaying ? (
+                          <Pause size={20} className="text-white" />
+                        ) : (
+                          <Play size={20} className="text-white" />
+                        )}
+                      </button>
+                      
+                      {/* Mute/Unmute Button */}
+                      <button
+                        onClick={() => {
+                          setIsMuted(!isMuted);
+                          if (fullscreenVideoRef.current) {
+                            fullscreenVideoRef.current.muted = !isMuted;
+                          }
+                        }}
+                        className="w-12 h-12 bg-red-600/80 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300"
+                      >
+                        {isMuted ? (
+                          <VolumeX size={20} className="text-white" />
+                        ) : (
+                          <Volume2 size={20} className="text-white" />
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Close Button - Mobile Responsive */}
+              {/* Close Button */}
               <button
                 onClick={() => {
                   setIsFullscreen(false);
                   setIsPlaying(false);
                   setFullscreenVideo(null);
                 }}
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg z-10"
+                className="absolute top-6 right-6 w-12 h-12 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
