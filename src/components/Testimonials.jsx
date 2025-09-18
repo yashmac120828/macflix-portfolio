@@ -39,6 +39,16 @@ const Testimonials = () => {
       // The rest are data rows
       const rows = data.values.slice(1);
 
+
+      // Shuffle array utility
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
       const formattedTestimonials = rows
         .map(row => {
           const rowObject = {};
@@ -58,10 +68,10 @@ const Testimonials = () => {
           date: testimonial.Date || new Date().toISOString().split('T')[0],
           status: testimonial.Status || 'Pending',
           verified: testimonial.Verified === 'Yes' || false,
-        }))
-        .slice(0, 9); // Show max 9 testimonials
+        }));
 
-      setTestimonials(formattedTestimonials);
+      // Shuffle and then slice for random display
+      setTestimonials(shuffleArray(formattedTestimonials).slice(0, 9));
 
     } catch (error) {
       console.error('Error fetching testimonials:', error);
