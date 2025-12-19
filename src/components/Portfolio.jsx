@@ -18,6 +18,8 @@ style.textContent = `
 typeof document !== 'undefined' && document.head.appendChild(style)
 
 // Cloudinary URLs for optimized images
+const bloodDonation10_10_2025="Blood_donation_camp_2X3_fhgmbk"
+const myElectricals="MY_Electricals_2_s5iwgd"
 const FrontSideCard = "Frontside_Card_Design_d7z4h4"
 const FrontSideCard2 = "FrontSide_nbt8qf"
 const cardb = "Red_Black_Design_Card_mgmag8"
@@ -59,16 +61,17 @@ export default function Portfolio() {
       height: 'h-[400px]',
       objectFit: 'object-contain'
     },
-    'Birthday Cards': {
-      aspectRatio: 'aspect-[4/5]', // Portrait orientation for birthday cards
-      height: 'h-[500px]',
-      objectFit: 'object-contain'
-    },
     'Banner Design': {
       aspectRatio: 'aspect-[16/9]', // Standard banner ratio
       height: 'h-[400px]',
       objectFit: 'object-contain'
     },
+    'Birthday Cards': {
+      aspectRatio: 'aspect-[4/5]', // Portrait orientation for birthday cards
+      height: 'h-[500px]',
+      objectFit: 'object-contain'
+    },
+    
     'Social Media': {
       aspectRatio: 'aspect-[9/16]', // Vertical social media post ratio
       height: 'h-[600px]',
@@ -128,8 +131,17 @@ export default function Portfolio() {
       name: "Visiting Cards",
       description: "Professional business card designs with modern layouts",
       projects: [
+        {
+          id:1,
+          title:"Modern Visiting Card",
+          image:myElectricals,
+          client:"MY Electricals",
+          description:"A modern and sleek business card design for MY Electricals, featuring bold typography and a clean layout.",
+          features:["High-quality cardstock","Modern typography","Clean layout","Minimalist design"],
+          completionDate:"2025-11-10",
+        },
         { 
-          id: 1, 
+          id: 2, 
           title: "Corporate Business Card", 
           image: FrontSideCard, 
           client: "Bhautik Shah",
@@ -140,7 +152,7 @@ export default function Portfolio() {
           type: "image"
         },
         { 
-          id: 2, 
+          id: 3, 
           title: "Creative Designer Card", 
           image: FrontSideCard2, 
           client: "Bhautik Shah",
@@ -151,7 +163,7 @@ export default function Portfolio() {
           type: "image"
         },
         { 
-          id: 3, 
+          id: 4, 
           title: "Insurance Professional Card", 
           image: cardb, 
           client: "Bhautik Shah",
@@ -159,6 +171,46 @@ export default function Portfolio() {
           features: ["Professional layout", "Trust symbols", "Clear contact info", "Industry-specific design"],
           completionDate: "2024-03-25",
           projectType: "Professional Services",
+          type: "image"
+        }
+      ]
+    },
+    
+    {
+      name: "Banner Design",
+      description: "Eye-catching banners for events, promotions, and marketing",
+      projects: [
+        {
+         id: 6, 
+          title: "Blood Donation Camp Banner", 
+          image: bloodDonation10_10_2025, 
+          client: "Help Warriors Foundation",
+          description: "Impactful banner design for blood donation camp with clear messaging.",
+          features: ["Bold typography", "Medical imagery", "Clear CTA", "High impact"],
+          completionDate: "2025-12-12",
+          projectType: "Social Campaign",
+          type: "image" 
+        },
+        { 
+          id: 6, 
+          title: "Blood Donation Camp Banner", 
+          image: B1, 
+          client: "Help Warriors Foundation",
+          description: "Impactful banner design for blood donation camp with clear messaging.",
+          features: ["Bold typography", "Medical imagery", "Clear CTA", "High impact"],
+          completionDate: "2024-01-15",
+          projectType: "Social Campaign",
+          type: "image"
+        },
+        { 
+          id: 7, 
+          title: "Health Campaign Banner", 
+          image: B2, 
+          client: "Help Warriors Foundation",
+          description: "Health awareness campaign banner with professional medical design.",
+          features: ["Medical theme", "Professional look", "Informative", "Trust building"],
+          completionDate: "2024-01-15",
+          projectType: "Health Campaign",
           type: "image"
         }
       ]
@@ -187,34 +239,6 @@ export default function Portfolio() {
           features: ["Colorful design", "Playful graphics", "Custom illustrations", "Premium paper"],
           completionDate: "2024-03-10",
           projectType: "Party Invitation",
-          type: "image"
-        }
-      ]
-    },
-    {
-      name: "Banner Design",
-      description: "Eye-catching banners for events, promotions, and marketing",
-      projects: [
-        { 
-          id: 6, 
-          title: "Blood Donation Camp Banner", 
-          image: B1, 
-          client: "Help Warriors Foundation",
-          description: "Impactful banner design for blood donation camp with clear messaging.",
-          features: ["Bold typography", "Medical imagery", "Clear CTA", "High impact"],
-          completionDate: "2024-01-15",
-          projectType: "Social Campaign",
-          type: "image"
-        },
-        { 
-          id: 7, 
-          title: "Health Campaign Banner", 
-          image: B2, 
-          client: "Help Warriors Foundation",
-          description: "Health awareness campaign banner with professional medical design.",
-          features: ["Medical theme", "Professional look", "Informative", "Trust building"],
-          completionDate: "2024-01-15",
-          projectType: "Health Campaign",
           type: "image"
         }
       ]
@@ -265,7 +289,7 @@ export default function Portfolio() {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % totalSlides)
-    }, 4000)
+    }, 10000)
 
     return () => clearInterval(interval)
   }, [isAutoPlay, totalSlides, isFullscreen])
