@@ -29,7 +29,7 @@ export default function Navigation() {
 
   const navItems = [
     { name: 'Home', path: '#home', type: 'anchor' },
-    { name: 'Services', path: '/services-info', type: 'anchor' },
+    { name: 'Services', path: '#services', type: 'anchor' },
     { name: 'Portfolio', path: '#portfolio', type: 'anchor' },
     { name: 'Testimonials', path: '#testimonials', type: 'anchor' },
     { name: 'Contact', path: '#contact', type: 'anchor' }
