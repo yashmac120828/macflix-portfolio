@@ -45,8 +45,7 @@ export default function App() {
       <Navigation />
       <Hero />
       <Services />
-      <Portfolio />
-      <Testimonials />
+      
       
       {/* NEW: Premium Lead Generation Funnel */}
       <WhyMacflix />
@@ -55,7 +54,8 @@ export default function App() {
       <PackageMatcher />
       <LeadForm />
       <ConsultationBooking />
-      
+      <Portfolio />
+      <Testimonials />
       <Contact />
       <Footer />
       
