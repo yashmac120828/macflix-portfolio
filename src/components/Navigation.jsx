@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Logo from './Logo'
 import { NavShimmer } from './ShimmerLoader'
+import { Link } from 'react-router-dom';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +27,13 @@ export default function Navigation() {
     return () => clearTimeout(timer)
   }, [])
 
-  const navItems = ['Home', 'Services', 'Portfolio','Testimonials', 'Contact']
+  const navItems = [
+    { name: 'Home', path: '#home', type: 'anchor' },
+    { name: 'Services', path: '#services', type: 'anchor' },
+    { name: 'Portfolio', path: '#portfolio', type: 'anchor' },
+    { name: 'Testimonials', path: '#testimonials', type: 'anchor' },
+    { name: 'Contact', path: '#contact', type: 'anchor' }
+  ];
 
   if (isLoading) {
     return <NavShimmer />
@@ -48,19 +55,41 @@ export default function Navigation() {
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
             {navItems.map((item, index) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className={`font-medium transition-colors duration-300 hover:text-macflix-primary ${
-                  scrolled ? 'text-macflix-textdark' : 'text-white'
-                }`}
-                whileHover={{ scale: 1.05 }}
+              <motion.div
+                key={item.name}
+                whileHover={{ 
+                  scale: 1.08, 
+                  y: -2,
+                  transition: { duration: 0.2 }
+                }}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3 }}
+                transition={{ 
+                  delay: index * 0.08 + 0.3,
+                  duration: 0.5,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
               >
-                {item}
-              </motion.a>
+                {item.type === 'anchor' ? (
+                  <a
+                    href={item.path}
+                    className={`font-medium transition-colors duration-300 hover:text-macflix-primary relative ${
+                      scrolled ? 'text-macflix-textdark' : 'text-white'
+                    }`}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={`font-medium transition-colors duration-300 hover:text-macflix-primary relative ${
+                      scrolled ? 'text-macflix-textdark' : 'text-white'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </motion.div>
             ))}
           </div>
 
@@ -84,14 +113,25 @@ export default function Navigation() {
             exit={{ opacity: 0, y: -20 }}
           >
             {navItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="block py-3 text-macflix-textdark font-medium hover:text-macflix-primary transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {item}
-              </a>
+              item.type === 'anchor' ? (
+                <a
+                  key={item.name}
+                  href={item.path}
+                  className="block py-3 text-macflix-textdark font-medium hover:text-macflix-primary transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="block py-3 text-macflix-textdark font-medium hover:text-macflix-primary transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </motion.div>
         )}

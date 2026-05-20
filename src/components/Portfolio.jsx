@@ -1,21 +1,8 @@
-import { useState, useEffect , useRef} from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, Pause, ChevronLeft, ChevronRight, Volume2, VolumeX, Maximize } from 'lucide-react'
+import { Eye, MessageCircle, X, Calendar, User } from 'lucide-react'
 import { getCloudinaryUrl } from '../utils/cloudinary'
-import { VideoShimmer, ImageShimmer, ProjectDetailsShimmer } from './ShimmerLoader'
-
-// Add no-scrollbar styles to a style tag
-const style = document.createElement('style')
-style.textContent = `
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-`
-typeof document !== 'undefined' && document.head.appendChild(style)
+import { ImageShimmer } from './ShimmerLoader'
 
 // Cloudinary URLs for optimized images
 const bloodDonation10_10_2025="Blood_donation_camp_2X3_fhgmbk"
@@ -35,110 +22,26 @@ const FOOD_MENU = "32_Food_Menu_1_dakfll"
 const BACKGROUND_IMAGE = "nethero_l0cx62"
 
 export default function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState(0)
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoPlay, setIsAutoPlay] = useState(true)
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(true)
-  const [fullscreenVideo, setFullscreenVideo] = useState(null)
-  const [isContentLoading, setIsContentLoading] = useState(true)
-  const [isImageLoading, setIsImageLoading] = useState({})
-  const [isVideoLoading, setIsVideoLoading] = useState({})
-  const videoRef = useRef(null)
-  const fullscreenVideoRef = useRef(null)
-
-  
-  // Category-specific configurations for aspect ratios and sizing
-  const categoryConfigs = {
-     'Video Editing': {
-      aspectRatio: 'aspect-square', // Square container
-      height: 'h-[500px]',
-      objectFit: 'object-cover'
-    },
-    'Visiting Cards': {
-      aspectRatio: 'aspect-[3.5/2]', // Standard business card ratio
-      height: 'h-[400px]',
-      objectFit: 'object-contain'
-    },
-    'Banner Design': {
-      aspectRatio: 'aspect-[16/9]', // Standard banner ratio
-      height: 'h-[400px]',
-      objectFit: 'object-contain'
-    },
-    'Birthday Cards': {
-      aspectRatio: 'aspect-[4/5]', // Portrait orientation for birthday cards
-      height: 'h-[500px]',
-      objectFit: 'object-contain'
-    },
-    
-    'Social Media': {
-      aspectRatio: 'aspect-[9/16]', // Vertical social media post ratio
-      height: 'h-[600px]',
-      objectFit: 'object-contain'
-    },
-   
-    'Food Menu Design': {
-      aspectRatio: 'aspect-[3/4]', // Menu card ratio
-      height: 'h-[600px]',
-      objectFit: 'object-contain'
-    }
-  }
+  const [activeCategory, setActiveCategory] = useState('All')
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [hoveredCard, setHoveredCard] = useState(null)
 
   // Portfolio categories with projects
   const categories = [
     {
-      name: "Video Editing",
-      description: "Professional video editing and motion graphics",
-      projects: [
-        {
-          id: 9,
-          title: "Creative Motion Edit",
-          image: VID1,
-          client: "MACFLIX",
-          description: "Dynamic motion graphics and creative video editing showcase.",
-          features: ["Motion Graphics", "Creative Transitions", "Visual Effects", "Color Grading"],
-          completionDate: "2024-03-01",
-          projectType: "Video Edit",
-          type: "video",
-          startTime: 15 // Start from 15 seconds where the best scenes begin
-        },
-        {
-          id: 10,
-          title: "Cinematic Edit",
-          image: VID2,
-          client: "MACFLIX",
-          description: "Cinematic style video editing with smooth transitions.",
-          features: ["Cinematic Effects", "Smooth Transitions", "Professional Audio", "Color Grading"],
-          completionDate: "2024-03-15",
-          projectType: "Video Edit",
-          type: "video"
-        },
-        {
-          id: 11,
-          title: "Social Media Reel",
-          image: VID3,
-          client: "MACFLIX",
-          description: "Engaging social media reel with trendy effects.",
-          features: ["Trendy Effects", "Dynamic Transitions", "Music Sync", "Social Optimization"],
-          completionDate: "2024-03-20",
-          projectType: "Social Media",
-          type: "video"
-        }
-      ]
-    },
-    {
       name: "Visiting Cards",
-      description: "Professional business card designs with modern layouts",
       projects: [
         {
-          id:1,
-          title:"Modern Visiting Card",
-          image:myElectricals,
-          client:"MY Electricals",
-          description:"A modern and sleek business card design for MY Electricals, featuring bold typography and a clean layout.",
-          features:["High-quality cardstock","Modern typography","Clean layout","Minimalist design"],
-          completionDate:"2025-11-10",
+          id: 1,
+          title: "Modern Visiting Card",
+          image: myElectricals,
+          client: "MY Electricals",
+          description: "A modern and sleek business card design featuring bold typography and a clean layout.",
+          features: ["High-quality cardstock", "Modern typography", "Clean layout", "Minimalist design"],
+          completionDate: "2025-11-10",
+          category: "Visiting Cards",
+          type: "image"
         },
         { 
           id: 2, 
@@ -148,7 +51,7 @@ export default function Portfolio() {
           description: "A sleek and professional business card design featuring modern typography and clean layout.",
           features: ["Premium cardstock", "Embossed logo", "Gold foil accents", "Double-sided design"],
           completionDate: "2024-03-15",
-          projectType: "Business Identity",
+          category: "Visiting Cards",
           type: "image"
         },
         { 
@@ -159,7 +62,7 @@ export default function Portfolio() {
           description: "An innovative business card design with creative elements and unique layout.",
           features: ["Creative typography", "Color gradient", "Unique shape", "Matte finish"],
           completionDate: "2024-03-20",
-          projectType: "Creative Design",
+          category: "Visiting Cards",
           type: "image"
         },
         { 
@@ -170,719 +73,410 @@ export default function Portfolio() {
           description: "Professional business card design for insurance industry with trust-building elements.",
           features: ["Professional layout", "Trust symbols", "Clear contact info", "Industry-specific design"],
           completionDate: "2024-03-25",
-          projectType: "Professional Services",
+          category: "Visiting Cards",
           type: "image"
         }
       ]
     },
-    
     {
       name: "Banner Design",
-      description: "Eye-catching banners for events, promotions, and marketing",
       projects: [
         {
-         id: 6, 
+          id: 5, 
           title: "Blood Donation Camp Banner", 
           image: bloodDonation10_10_2025, 
           client: "Help Warriors Foundation",
           description: "Impactful banner design for blood donation camp with clear messaging.",
           features: ["Bold typography", "Medical imagery", "Clear CTA", "High impact"],
           completionDate: "2025-12-12",
-          projectType: "Social Campaign",
+          category: "Banner Design",
           type: "image" 
         },
         { 
           id: 6, 
-          title: "Blood Donation Camp Banner", 
+          title: "Health Campaign Banner", 
           image: B1, 
           client: "Help Warriors Foundation",
           description: "Impactful banner design for blood donation camp with clear messaging.",
           features: ["Bold typography", "Medical imagery", "Clear CTA", "High impact"],
           completionDate: "2024-01-15",
-          projectType: "Social Campaign",
+          category: "Banner Design",
           type: "image"
         },
         { 
           id: 7, 
-          title: "Health Campaign Banner", 
+          title: "Health Awareness Banner", 
           image: B2, 
           client: "Help Warriors Foundation",
           description: "Health awareness campaign banner with professional medical design.",
           features: ["Medical theme", "Professional look", "Informative", "Trust building"],
           completionDate: "2024-01-15",
-          projectType: "Health Campaign",
+          category: "Banner Design",
           type: "image"
         }
       ]
     },
     {
       name: "Birthday Cards",
-      description: "Creative and vibrant birthday celebration cards",
       projects: [
         { 
-          id: 4, 
+          id: 8, 
           title: "Birthday Celebration Card", 
           image: BH1, 
           client: "Nisha Machhi",
           description: "Elegant birthday card design with festive motifs and celebratory elements.",
           features: ["Festive designs", "Premium printing", "Custom typography", "Celebration theme"],
           completionDate: "2024-01-26",
-          projectType: "Birthday Card",
+          category: "Birthday Cards",
           type: "image"
         },
         { 
-          id: 5, 
+          id: 9, 
           title: "Party Invitation Design", 
           image: BH2, 
           client: "Nisha Machhi",
           description: "Fun and colorful birthday party invitation with playful elements.",
           features: ["Colorful design", "Playful graphics", "Custom illustrations", "Premium paper"],
           completionDate: "2024-03-10",
-          projectType: "Party Invitation",
+          category: "Birthday Cards",
           type: "image"
         }
       ]
     },
     {
       name: "Social Media",
-      description: "Engaging social media designs and promotional content",
       projects: [
         {
-          id: 8,
+          id: 10,
           title: "Blood Donation Campaign",
           image: BLOOD_DONATION,
           client: "Help Warriors Foundation",
           description: "Social media campaign design for blood donation awareness.",
           features: ["Campaign Design", "Social Impact", "Clear Messaging", "Community Engagement"],
           completionDate: "2024-02-15",
-          projectType: "Social Campaign",
+          category: "Social Media",
           type: "image"
         }
       ]
     },
     {
       name: "Food Menu Design",
-      description: "Creative and appetizing menu designs for restaurants",
       projects: [
         {
-          id: 12,
+          id: 11,
           title: "Maharaja Foods Menu",
           image: FOOD_MENU,
           client: "Maharaja Foods",
           description: "Elegant and modern menu design featuring fast foods and breakfast items.",
           features: ["Modern Typography", "Professional Layout", "Food Categories", "Attractive Food Presentation"],
           completionDate: "2024-03-25",
-          projectType: "Restaurant Menu",
+          category: "Food Menu Design",
           type: "image"
         }
       ]
     }
   ]
 
-  const currentCategory = categories[activeCategory]
-  const currentProject = currentCategory?.projects?.[currentSlide]
-  const totalSlides = currentCategory?.projects?.length || 0
+  // Get all projects in a flat array
+  const allProjects = categories.flatMap(cat => cat.projects)
 
-  // Auto-play functionality
+  // Filter projects based on active category
+  const filteredProjects = activeCategory === 'All' 
+    ? allProjects 
+    : allProjects.filter(project => project.category === activeCategory)
+
+  // Simulate loading
   useEffect(() => {
-    if (!isAutoPlay || isFullscreen) return
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides)
-    }, 10000)
-
-    return () => clearInterval(interval)
-  }, [isAutoPlay, totalSlides, isFullscreen])
-
-  // Reset slide when category changes
-  useEffect(() => {
-    setCurrentSlide(0)
+    setIsLoading(true)
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 800)
+    return () => clearTimeout(timer)
   }, [activeCategory])
 
-  // Simulate initial content loading
-  useEffect(() => {
-    setIsContentLoading(true)
-    const timer = setTimeout(() => {
-      setIsContentLoading(false)
-    }, 1500) // 1.5 seconds loading simulation
-    
-    return () => clearTimeout(timer)
-  }, [activeCategory, currentSlide])
-
-  // Handle image loading
-  const handleImageLoad = (projectId) => {
-    setIsImageLoading(prev => ({ ...prev, [projectId]: false }))
-  }
-
-  const handleImageStart = (projectId) => {
-    setIsImageLoading(prev => ({ ...prev, [projectId]: true }))
-  }
-
-  // Handle video loading
-  const handleVideoLoad = (projectId) => {
-    setIsVideoLoading(prev => ({ ...prev, [projectId]: false }))
-  }
-
-  const handleVideoStart = (projectId) => {
-    setIsVideoLoading(prev => ({ ...prev, [projectId]: true }))
-  }
-
-  // Handle video autoplay when project changes
-  useEffect(() => {
-    if (currentProject?.type === 'video' && videoRef.current) {
-      const video = videoRef.current;
-      const startTime = currentProject.startTime || 0;
-      
-      console.log('Project changed to video:', currentProject.title, 'Start time:', startTime);
-      
-      const setVideoTime = () => {
-        if (video && !isNaN(video.duration)) {
-          video.currentTime = startTime;
-          console.log('Set video time to:', startTime, 'actual:', video.currentTime);
-          
-          // Double-check after a short delay
-          setTimeout(() => {
-            if (video && Math.abs(video.currentTime - startTime) > 0.5) {
-              video.currentTime = startTime;
-              console.log('Corrected video time to:', startTime);
-            }
-          }, 100);
-        }
-      };
-      
-      const handleLoadedMetadata = () => {
-        console.log('Metadata loaded in useEffect');
-        setVideoTime();
-      };
-      
-      const handleCanPlay = () => {
-        console.log('Video can play, setting time');
-        setVideoTime();
-      };
-      
-      if (video.readyState >= 1) {
-        // Metadata already loaded
-        console.log('Metadata already loaded, setting time immediately');
-        setVideoTime();
-      } else {
-        // Wait for metadata to load
-        video.addEventListener('loadedmetadata', handleLoadedMetadata);
-        video.addEventListener('canplay', handleCanPlay);
-      }
-      
-      // Try to play the video
-      video.play().catch((error) => {
-        console.log('Autoplay failed:', error);
-      });
-      
-      // Cleanup
-      return () => {
-        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        video.removeEventListener('canplay', handleCanPlay);
-      };
-    }
-  }, [currentProject])
-
-  // Handle fullscreen video state
-  useEffect(() => {
-    if (isFullscreen && fullscreenVideo && fullscreenVideoRef.current) {
-      setIsPlaying(true);
-      
-      // Set start time if specified
-      const startTime = fullscreenVideo.startTime || 0;
-      const video = fullscreenVideoRef.current;
-      
-      const setFullscreenVideoTime = () => {
-        if (video && !isNaN(video.duration)) {
-          video.currentTime = startTime;
-          console.log('Set fullscreen video time to:', startTime);
-        }
-      };
-      
-      if (video.readyState >= 1) {
-        setFullscreenVideoTime();
-      }
-      
-      video.play().then(() => {
-        // Video started playing, double-check start time
-        setTimeout(() => {
-          if (video && Math.abs(video.currentTime - startTime) > 0.5) {
-            video.currentTime = startTime;
-            console.log('Corrected fullscreen video time to:', startTime);
-          }
-        }, 200);
-      }).catch(() => {
-        // Autoplay failed
-      });
-    } else {
-      setIsPlaying(false);
-    }
-  }, [isFullscreen, fullscreenVideo])
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
-  }
-
-  const handleCategoryChange = (index) => {
-    setActiveCategory(index)
-  }
-
   return (
-    <section className="h-screen relative bg-black overflow-hidden" id="portfolio">
-      {/* Background Image with Gradient Overlay */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/90 z-10"></div>
-        <img 
-          src={getCloudinaryUrl(BACKGROUND_IMAGE)}
-          alt="Portfolio Background"
-          className="w-full h-full object-cover"
-        />
-      </div>
-      
-      <div className="container relative z-10 mx-auto px-4 min-h-screen flex flex-col py-4 md:py-8 overflow-y-auto">
+    <section className="min-h-screen py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900" id="portfolio">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        
         {/* Section Header */}
         <motion.div
-          className="text-center mb-4 md:mb-6"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-white">
-            Our Creative Portfolio
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Our Creative <span className="text-red-600">Portfolio</span>
           </h2>
-          <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto px-2">
-            Explore our diverse portfolio of creative works and professional designs
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            Explore our professional creative work that brings brands to life
           </p>
         </motion.div>
 
-        {/* Category Navigation - Scrollable on mobile */}
-        <div className="flex md:flex-wrap md:justify-center gap-2 md:gap-3 mb-4 md:mb-6 overflow-x-auto pb-2 md:pb-0 px-2 md:px-0 no-scrollbar">
-          {categories.map((category, index) => (
+        {/* Category Filters */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true }}
+        >
+          {['All', ...categories.map(cat => cat.name)].map((category, index) => (
             <motion.button
-              key={category.name}
-              onClick={() => handleCategoryChange(index)}
-              className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-medium whitespace-nowrap ${
-                activeCategory === index
-                  ? 'bg-red-600 text-white shadow-lg'
-                  : 'bg-white/10 text-white backdrop-blur-sm'
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`px-6 py-2.5 rounded-full font-medium transition-all duration-300 ${
+                activeCategory === category
+                  ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
               }`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ 
-                opacity: 1, 
-                x: 0,
-                scale: activeCategory === index ? 1.05 : 1
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.4,
+                delay: index * 0.05,
+                ease: [0.16, 1, 0.3, 1]
               }}
+              viewport={{ once: true }}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              {category.name}
+              {category}
             </motion.button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Main Content Layout - Stack on mobile, side by side on desktop */}
-        <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center min-h-[450px] py-2 md:py-4">
-          {/* Content Display - Full width on mobile */}
-          <div className="w-full md:w-1/2 flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              {isContentLoading || !currentProject ? (
+        {/* Projects Grid */}
+        <AnimatePresence mode="wait">
+          {isLoading ? (
+            <motion.div
+              key="loading"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              {[...Array(6)].map((_, index) => (
+                <ImageShimmer key={index} height="h-96" />
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key={activeCategory}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {filteredProjects.map((project, index) => (
                 <motion.div
-                  key="loading"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  key={project.id}
+                  className="group relative bg-gray-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-red-600/20 transition-all duration-500"
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                  onMouseEnter={() => setHoveredCard(project.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
                 >
-                  {currentProject?.type === 'video' ? (
-                    <VideoShimmer 
-                      aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
-                      height={categoryConfigs[currentCategory.name]?.height || 'h-[400px]'}
+                  {/* Project Image */}
+                  <div className="relative h-64 overflow-hidden bg-gray-900">
+                    <motion.img
+                      src={getCloudinaryUrl(project.image)}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      animate={{
+                        scale: hoveredCard === project.id ? 1.1 : 1
+                      }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
                     />
-                  ) : (
-                    <ImageShimmer 
-                      aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
-                      height={categoryConfigs[currentCategory.name]?.height || 'h-[400px]'}
-                    />
-                  )}
-                </motion.div>
-              ) : (
-                <motion.div
-                  key={`${activeCategory}-${currentSlide}`}
-                  className={`relative rounded-2xl overflow-hidden shadow-2xl bg-black/20 backdrop-blur-sm ${categoryConfigs[currentCategory.name].height} ${
-                    categoryConfigs[currentCategory.name].aspectRatio
-                  }`}
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 50 }}
-                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                >
-                  {/* Loading overlay for individual content */}
-                  {currentProject && (isVideoLoading[currentProject.id] || isImageLoading[currentProject.id]) && (
-                    <div className="absolute inset-0 z-10">
-                      {currentProject.type === 'video' ? (
-                        <VideoShimmer 
-                          aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
-                          height="h-full"
-                        />
-                      ) : (
-                        <ImageShimmer 
-                          aspectRatio={categoryConfigs[currentCategory.name]?.aspectRatio || 'aspect-square'}
-                          height="h-full"
-                        />
-                      )}
-                    </div>
-                  )}
-                  
-                  {currentProject?.type === 'video' ? (
-                  <div 
-                    className="relative w-full h-full bg-gradient-to-br from-red-900/30 via-black/50 to-purple-900/30 rounded-xl overflow-hidden cursor-pointer group flex items-center justify-center"
-                    onClick={() => {
-                      setFullscreenVideo(currentProject);
-                      setIsFullscreen(true);
-                    }}
-                  >
-                    {/* Video Container - 9:16 aspect ratio centered */}
-                    <div className="relative aspect-[9/16] h-[85%] bg-black rounded-lg overflow-hidden shadow-2xl">
-                      <video
-                        src={getCloudinaryUrl(currentProject.image, 'video')}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        loop
-                        muted={true}
-                        playsInline
-                        ref={videoRef}
-                        onLoadStart={() => handleVideoStart(currentProject.id)}
-                        onLoadedData={() => handleVideoLoad(currentProject.id)}
-                        onLoadedMetadata={() => {
-                          // Set start time when metadata is loaded
-                          console.log('Video metadata loaded, setting start time:', currentProject?.startTime);
-                          if (videoRef.current && currentProject?.startTime && !isNaN(videoRef.current.duration)) {
-                            videoRef.current.currentTime = currentProject.startTime;
-                            console.log('Set video time to:', currentProject.startTime);
-                          }
-                          handleVideoLoad(currentProject?.id)
+                    
+                    {/* Hover Overlay */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex items-center justify-center gap-4"
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: hoveredCard === project.id ? 1 : 0
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <motion.button
+                        onClick={() => setSelectedProject(project)}
+                        className="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold flex items-center gap-2 hover:bg-gray-100 transition-colors"
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{
+                          y: hoveredCard === project.id ? 0 : 20,
+                          opacity: hoveredCard === project.id ? 1 : 0
                         }}
-                        onCanPlay={() => {
-                          // Additional check when video can play
-                          if (videoRef.current && currentProject?.startTime && !isNaN(videoRef.current.duration)) {
-                            const timeDiff = Math.abs(videoRef.current.currentTime - currentProject.startTime);
-                            if (timeDiff > 0.5) {
-                              videoRef.current.currentTime = currentProject.startTime;
-                              console.log('Corrected video time on canPlay:', currentProject.startTime);
-                            }
-                          }
-                        }}
-                        onSeeked={() => {
-                          // Video has finished seeking to the new time
-                          console.log('Video seeked to:', videoRef.current?.currentTime);
-                        }}
-                        onPlay={() => {
-                          // Ensure start time is correct when video starts playing
-                          if (videoRef.current && currentProject?.startTime && 
-                              Math.abs(videoRef.current.currentTime - currentProject.startTime) > 0.5) {
-                            console.log('Correcting video time on play');
-                            videoRef.current.currentTime = currentProject.startTime;
-                          }
-                        }}
-                      />
+                        transition={{ duration: 0.3, delay: 0.1 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Eye size={18} />
+                        View Details
+                      </motion.button>
                       
-                      {/* Video Overlay with Play Button */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-center justify-center group-hover:bg-black/20 transition-all duration-300">
-                        <div className="bg-red-600/80 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-all duration-300 shadow-lg">
-                          <Maximize size={24} className="text-white" />
-                        </div>
+                      <motion.a
+                        href="https://wa.me/918780364562"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-red-600 text-white rounded-full font-semibold flex items-center gap-2 hover:bg-red-700 transition-colors"
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{
+                          y: hoveredCard === project.id ? 0 : 20,
+                          opacity: hoveredCard === project.id ? 1 : 0
+                        }}
+                        transition={{ duration: 0.3, delay: 0.15 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <MessageCircle size={18} />
+                        Request This
+                      </motion.a>
+                    </motion.div>
+                  </div>
+
+                  {/* Project Info */}
+                  <div className="p-6">
+                    {/* Category Badge */}
+                    <span className="inline-block px-3 py-1 mb-3 text-xs font-medium bg-red-600/20 text-red-400 rounded-full border border-red-600/30">
+                      {project.category}
+                    </span>
+                    
+                    {/* Project Title */}
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
+                      {project.title}
+                    </h3>
+                    
+                    {/* Project Meta */}
+                    <div className="flex items-center gap-4 text-sm text-gray-400">
+                      <div className="flex items-center gap-1">
+                        <User size={14} />
+                        <span>{project.client}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar size={14} />
+                        <span>{project.completionDate}</span>
                       </div>
                     </div>
-                    
-                    {/* Background Pattern/Texture */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-purple-600/10 pointer-events-none"></div>
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.3)_100%)] pointer-events-none"></div>
-                  </div>
-                  ) : (
-                    <img
-                      src={getCloudinaryUrl(currentProject.image)}
-                      alt={currentProject.title}
-                      className={`w-full h-full ${categoryConfigs[currentCategory.name].objectFit}`}
-                      onLoad={() => handleImageLoad(currentProject.id)}
-                      onLoadStart={() => handleImageStart(currentProject.id)}
-                    />
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Project Details - Full width on mobile */}
-          <div className="w-full md:w-1/2 h-full text-white flex flex-col justify-center px-2 md:px-0">
-            <AnimatePresence mode="wait">
-              {isContentLoading || !currentProject ? (
-                <motion.div
-                  key="details-loading"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <ProjectDetailsShimmer />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key={`${activeCategory}-${currentSlide}-details`}
-                  initial={{ opacity: 0, y: 20, x: 0 }}
-                  animate={{ opacity: 1, y: 0, x: 0 }}
-                  exit={{ opacity: 0, y: -20, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="space-y-3 md:space-y-4"
-                >
-                {/* Category Badge */}
-                <motion.span
-                  className="inline-block px-4 py-2 bg-red-600 text-white rounded-full text-sm font-medium"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                >
-                  {currentCategory.name}
-                </motion.span>
-
-                {/* Project Title */}
-                <motion.h3
-                  className="text-4xl font-bold leading-tight"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  {currentProject.title}
-                </motion.h3>
-
-                {/* Project Description */}
-                <motion.p
-                  className="text-xl text-gray-300 leading-relaxed"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  {currentProject.description}
-                </motion.p>
-
-                {/* Client & Date Info */}
-                <motion.div
-                  className="flex items-center gap-6 text-gray-400"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  <span><strong>Client:</strong> {currentProject.client}</span>
-                  <span><strong>Date:</strong> {currentProject.completionDate}</span>
-                </motion.div>
-
-                {/* Features */}
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <h4 className="text-lg font-semibold mb-3">Key Features:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {currentProject?.features?.map((feature, index) => (
-                      <motion.span
-                        key={feature}
-                        className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm border border-white/20"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.7 + index * 0.1, type: "spring", stiffness: 200 }}
-                      >
-                        {feature}
-                      </motion.span>
-                    )) || []}
                   </div>
                 </motion.div>
-
-                {/* CTA Button */}
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <a
-                    href="https://wa.me/918780364562"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-full hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  >
-                    Get Similar Design
-                  </a>
-                </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Navigation Controls - Adjusted for mobile */}
-        <div className="flex items-center justify-center gap-3 md:gap-4 mt-4 md:mt-6">
-          <button
-            onClick={prevSlide}
-            className="p-1.5 md:p-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all duration-300 group"
-            onMouseEnter={() => setIsAutoPlay(false)}
-            onMouseLeave={() => setIsAutoPlay(true)}
-          >
-            <ChevronLeft size={24} className="text-white group-hover:scale-110 transition-transform" />
-          </button>
-
-          {/* Slide Indicators */}
-          <div className="flex items-center gap-3">
-            {currentCategory?.projects?.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`transition-all duration-300 ${
-                  currentSlide === index
-                    ? 'w-8 h-2 bg-red-600 rounded-full'
-                    : 'w-2 h-2 bg-white/30 hover:bg-white/50 rounded-full'
-                }`}
-              />
-            )) || []}
-          </div>
-
-          <button
-            onClick={nextSlide}
-            className="p-1.5 md:p-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all duration-300 group"
-            onMouseEnter={() => setIsAutoPlay(false)}
-            onMouseLeave={() => setIsAutoPlay(true)}
-          >
-            <ChevronRight size={24} className="text-white group-hover:scale-110 transition-transform" />
-          </button>
-        </div>
-
-        {/* Auto-play Toggle - Adjusted for mobile */}
-        <motion.div
-          className="flex justify-center mt-3 md:mt-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-        >
-          <motion.button
-            onClick={() => setIsAutoPlay(!isAutoPlay)}
-            className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-full font-medium text-sm md:text-base ${
-              isAutoPlay 
-                ? 'bg-red-600 text-white'
-                : 'bg-white/10 text-white backdrop-blur-sm'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isAutoPlay ? <Pause size={18} /> : <Play size={18} />}
-            <span>{isAutoPlay ? 'Auto-play ON' : 'Auto-play OFF'}</span>
-          </motion.button>
-        </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Fullscreen Video Overlay */}
+      {/* Project Detail Modal */}
       <AnimatePresence>
-        {isFullscreen && fullscreenVideo && fullscreenVideo.type === 'video' && (
+        {selectedProject && (
           <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black flex items-center justify-center"
+            onClick={() => setSelectedProject(null)}
           >
-            <div className="relative w-full h-full flex items-center justify-center">
-              {/* Video Container */}
-              <div className="relative w-full h-full max-w-7xl mx-auto">
-                <video
-                  ref={fullscreenVideoRef}
-                  src={getCloudinaryUrl(fullscreenVideo.image, 'video')}
-                  className="w-full h-full object-contain"
-                  autoPlay
-                  loop
-                  playsInline
-                  muted={isMuted}
-                  onLoadedMetadata={() => {
-                    // Set start time when metadata is loaded
-                    console.log('Fullscreen video metadata loaded, setting start time:', fullscreenVideo.startTime);
-                    if (fullscreenVideoRef.current && fullscreenVideo.startTime) {
-                      fullscreenVideoRef.current.currentTime = fullscreenVideo.startTime;
-                      console.log('Set fullscreen video time to:', fullscreenVideoRef.current.currentTime);
-                    }
-                  }}
-                  onPlay={() => {
-                    // Ensure start time is correct when video starts playing
-                    if (fullscreenVideoRef.current && fullscreenVideo.startTime && 
-                        Math.abs(fullscreenVideoRef.current.currentTime - fullscreenVideo.startTime) > 1) {
-                      console.log('Correcting fullscreen video time on play');
-                      fullscreenVideoRef.current.currentTime = fullscreenVideo.startTime;
-                    }
-                  }}
-                />
-                
-                {/* Overlay Controls */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black via-black/50 to-transparent">
-                  <div className="flex items-center justify-between">
-                    {/* Title */}
-                    <h3 className="text-xl font-bold text-white">{fullscreenVideo.title}</h3>
-                    
-                    {/* Controls */}
-                    <div className="flex items-center gap-4">
-                      {/* Play/Pause Button */}
-                      <button
-                        onClick={() => {
-                          if (fullscreenVideoRef.current) {
-                            if (isPlaying) {
-                              fullscreenVideoRef.current.pause();
-                            } else {
-                              fullscreenVideoRef.current.play();
-                            }
-                            setIsPlaying(!isPlaying);
-                          }
-                        }}
-                        className="w-12 h-12 bg-red-600/80 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300"
-                      >
-                        {isPlaying ? (
-                          <Pause size={20} className="text-white" />
-                        ) : (
-                          <Play size={20} className="text-white" />
-                        )}
-                      </button>
-                      
-                      {/* Mute/Unmute Button */}
-                      <button
-                        onClick={() => {
-                          setIsMuted(!isMuted);
-                          if (fullscreenVideoRef.current) {
-                            fullscreenVideoRef.current.muted = !isMuted;
-                          }
-                        }}
-                        className="w-12 h-12 bg-red-600/80 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300"
-                      >
-                        {isMuted ? (
-                          <VolumeX size={20} className="text-white" />
-                        ) : (
-                          <Volume2 size={20} className="text-white" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+            <motion.div
+              className="bg-gray-900 rounded-3xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              initial={{ scale: 0.9, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 50 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Close Button */}
               <button
-                onClick={() => {
-                  setIsFullscreen(false);
-                  setIsPlaying(false);
-                  setFullscreenVideo(null);
-                }}
-                className="absolute top-6 right-6 w-12 h-12 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg"
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-6 right-6 w-10 h-10 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-colors z-10"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X size={20} className="text-white" />
               </button>
-            </div>
+
+              {/* Project Image */}
+              <div className="relative h-96 bg-gray-950">
+                <img
+                  src={getCloudinaryUrl(selectedProject.image)}
+                  alt={selectedProject.title}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+
+              {/* Project Details */}
+              <div className="p-8 md:p-12">
+                {/* Category */}
+                <span className="inline-block px-4 py-2 mb-4 text-sm font-medium bg-red-600/20 text-red-400 rounded-full border border-red-600/30">
+                  {selectedProject.category}
+                </span>
+
+                {/* Title */}
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  {selectedProject.title}
+                </h2>
+
+                {/* Description */}
+                <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                  {selectedProject.description}
+                </p>
+
+                {/* Meta Info */}
+                <div className="flex flex-wrap gap-6 mb-8 text-gray-400">
+                  <div>
+                    <span className="block text-sm text-gray-500 mb-1">Client</span>
+                    <span className="font-semibold text-white">{selectedProject.client}</span>
+                  </div>
+                  <div>
+                    <span className="block text-sm text-gray-500 mb-1">Completion Date</span>
+                    <span className="font-semibold text-white">{selectedProject.completionDate}</span>
+                  </div>
+                </div>
+
+                {/* Features */}
+                <div className="mb-8">
+                  <h4 className="text-lg font-semibold text-white mb-4">Key Features</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.features.map((feature, index) => (
+                      <span
+                        key={index}
+                        className="px-4 py-2 bg-gray-800 text-gray-300 rounded-full text-sm border border-gray-700"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <motion.a
+                    href="https://wa.me/918780364562"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 px-8 py-4 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors text-center flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <MessageCircle size={20} />
+                    Get a Quote
+                  </motion.a>
+                  <motion.a
+                    href="mailto:yashmachhi1408@gmail.com"
+                    className="flex-1 px-8 py-4 bg-gray-800 text-white font-bold rounded-full hover:bg-gray-700 transition-colors text-center border border-gray-700"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Email Us
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

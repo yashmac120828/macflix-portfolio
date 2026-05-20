@@ -179,8 +179,8 @@ export default function Contact() {
           className="text-center mb-12 sm:mb-20"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-100px" }}
         >
           <div className="flex justify-center mb-4 sm:mb-6">
             <div className="p-3 sm:p-4 bg-white/20 backdrop-blur-md rounded-xl sm:rounded-2xl">
@@ -198,10 +198,11 @@ export default function Contact() {
         {/* MacFlix Business Card */}
         <motion.div
           className="mb-8 sm:mb-16 max-w-2xl mx-auto px-4"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-50px" }}
+          whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
         >
           <div className="bg-black rounded-2xl sm:rounded-3xl p-4 sm:p-8 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-pink-900/20"></div>
@@ -299,19 +300,26 @@ export default function Contact() {
           className="mb-8 sm:mb-16 max-w-md mx-auto px-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <h3 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-white">Quick Connect</h3>
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8">
             <motion.div
               className="text-center w-full sm:w-auto"
-              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, scale: 0.9, x: -30 }}
+              whileInView={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: 0.3,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              viewport={{ once: true }}
             >
               <motion.button
                 onClick={() => openQROverlay('whatsapp')}
                 className="flex flex-col items-center p-4 sm:p-6 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl hover:bg-white/20 transition-all duration-300 group w-full"
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -8, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <div className="p-3 sm:p-4 bg-[#25D366] rounded-xl sm:rounded-2xl mb-2 sm:mb-3 group-hover:bg-[#22BC5C] transition-colors duration-300">
@@ -329,12 +337,19 @@ export default function Contact() {
             
             <motion.div
               className="text-center w-full sm:w-auto"
-              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, scale: 0.9, x: 30 }}
+              whileInView={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: 0.4,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              viewport={{ once: true }}
             >
               <motion.button
                 onClick={() => openQROverlay('instagram')}
                 className="flex flex-col items-center p-4 sm:p-6 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl hover:bg-white/20 transition-all duration-300 group w-full"
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -8, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <div className="p-3 sm:p-4 bg-pink-600 rounded-xl sm:rounded-2xl mb-2 sm:mb-3 group-hover:bg-pink-500 transition-colors duration-300">
@@ -351,11 +366,21 @@ export default function Contact() {
         <div className="mb-8 sm:mb-16 px-4">
           {/* Email Contact Card */}
           <motion.div
-            className="max-w-lg mx-auto bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:-translate-y-2"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            className="max-w-lg mx-auto bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center transition-all duration-300"
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ 
+              duration: 0.6, 
+              delay: 0.3,
+              ease: [0.16, 1, 0.3, 1]
+            }}
+            viewport={{ once: true, margin: "-50px" }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -8,
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              transition: { duration: 0.3 }
+            }}
           >
             <div className="inline-flex p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
               <Mail size={28} className="sm:w-8 sm:h-8" />
@@ -378,10 +403,14 @@ export default function Contact() {
         {/* CTA Section */}
         <motion.div
           className="text-center bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-12 mx-4"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ 
+            duration: 0.8, 
+            delay: 0.4,
+            ease: [0.16, 1, 0.3, 1]
+          }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <h3 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6">Start Your Project Today</h3>
           <p className="text-base sm:text-xl mb-6 sm:mb-8 text-white/90 max-w-2xl mx-auto">
@@ -424,13 +453,18 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={closeQROverlay}
           >
             <motion.div
               className="bg-white rounded-3xl p-8 max-w-md w-full relative"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              transition={{ 
+                duration: 0.4, 
+                ease: [0.16, 1, 0.3, 1]
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               <button

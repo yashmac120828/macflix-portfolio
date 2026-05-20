@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import React, { Component } from 'react';
 import logo from '../assets/logo.png';
 import { ServiceCardShimmer } from './ShimmerLoader'
@@ -132,10 +133,7 @@ export default function Services() {
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
               
-              {/* MacFlix Logo */}
-              <div className="absolute top-4 right-4 w-12 h-12 opacity-90">
-                <img src={logo} alt="MacFlix" className="w-full h-full object-contain" />
-              </div>
+              
               
               {/* Icon */}
               <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
@@ -180,10 +178,7 @@ export default function Services() {
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
               
-              {/* MacFlix Logo */}
-              <div className="absolute top-4 right-4 w-12 h-12 opacity-90">
-                <img src={logo} alt="MacFlix" className="w-full h-full object-contain" />
-              </div>
+              
               
               {/* Icon */}
               <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
@@ -215,24 +210,36 @@ export default function Services() {
             <motion.div
               key={index}
               className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.1,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              viewport={{ once: true, margin: "-50px" }}
+              whileHover={{ 
+                scale: 1.03, 
+                y: -8,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
               
-              {/* MacFlix Logo */}
-              <div className="absolute top-4 right-4 w-10 sm:w-12 h-10 sm:h-12 opacity-90">
-                <img src={logo} alt="MacFlix" className="w-full h-full object-contain" />
-              </div>
+              
               
               {/* Icon */}
-              <div className={`inline-flex p-3 sm:p-4 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
+              <motion.div 
+                className={`inline-flex p-3 sm:p-4 rounded-xl bg-gradient-to-br ${service.color} text-white mb-4`}
+                whileHover={{ 
+                  scale: 1.15, 
+                  rotate: [0, -5, 5, -5, 0],
+                  transition: { duration: 0.5 }
+                }}
+              >
                 {React.cloneElement(service.icon, { size: 28 })}
-              </div>
+              </motion.div>
               
               <h3 className="text-lg sm:text-xl font-bold mb-2 text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
                 {service.title}
@@ -248,6 +255,25 @@ export default function Services() {
           )}
         </div>
 
+        {/* Explore All Services Button */}
+        <motion.div
+          className="flex justify-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <Link to="/services-info">
+            <motion.button
+              className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-purple-600/50 transition-all"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span>Explore All Services & Pricing</span>
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </Link>
+        </motion.div>
         
       </div>
     </section>

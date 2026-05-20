@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Quote, User, Shield, CheckCircle, RefreshCw, ExternalLink } from 'lucide-react';
 import { TestimonialShimmer } from './ShimmerLoader';
+import { motion } from 'framer-motion';
 
 const Testimonials = () => {
   const GOOGLE_SHEETS_CONFIG = {
@@ -183,10 +184,23 @@ const Testimonials = () => {
             </div>
           ) : testimonials.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {testimonials.map((testimonial) => (
-                <div
+              {testimonials.map((testimonial, index) => (
+                <motion.div
                   key={testimonial.id}
                   className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden"
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: index * 0.1,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  whileHover={{ 
+                    y: -8, 
+                    scale: 1.02,
+                    transition: { duration: 0.3 }
+                  }}
                 >
                   {/* Decorative gradient */}
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
@@ -216,7 +230,7 @@ const Testimonials = () => {
                       <p className="text-gray-600 text-sm">{testimonial.role}</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           ) : (

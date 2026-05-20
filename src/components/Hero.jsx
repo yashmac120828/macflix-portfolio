@@ -94,7 +94,7 @@ export default function Hero() {
           className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 leading-tight flex items-center justify-center gap-0 relative"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Mac Text */}
           <motion.span 
@@ -198,27 +198,7 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          className="grid grid-cols-3 gap-3 sm:gap-8 mt-12 sm:mt-16 pt-12 sm:pt-16 border-t border-white/20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.1 }}
-        >
-          {[
-            { icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />, number: "50+", label: "Happy Clients" },
-            { icon: <Award className="w-6 h-6 sm:w-8 sm:h-8" />, number: "10+", label: "Projects Done" },
-            { icon: <Clock className="w-6 h-6 sm:w-8 sm:h-8" />, number: "24/7", label: "Support" },
-          ].map((stat, index) => (
-            <div key={index} className="text-center px-2 sm:px-4">
-              <div className="flex justify-center mb-2 sm:mb-4 text-yellow-300">
-                {stat.icon}
-              </div>
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">{stat.number}</div>
-              <div className="text-white/80 text-sm sm:text-base">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
+        
       </div>
 
       {/* Scroll Indicator - Hidden on mobile */}
